@@ -94,37 +94,22 @@ public:
 
         //Travel phase: Generate polygon mesh
         _polygon poly;
-        //Foreach seed edge
-        //for(auto &e : seed_edges){
-        //    poly = travel_triangles(e);
-        //    if(!has_BarrierEdgeTip(poly)){ //If the polygon is a simple polygon then is part of the mesh
-        //        polygonal_mesh.push_back({e, poly});
-        //    }else{ //Else, the polygon is send to reparation phase
-        //        barrieredge_tip_reparation(e, poly);
-        //    }         
-        //}    
-
+        //Foreach seed edge generate polygon
         t_start = std::chrono::high_resolution_clock::now();
         for(auto &e : seed_edges){
             poly = travel_triangles(e);
-            polygonal_mesh.push_back({e, poly});
+            if(!has_BarrierEdgeTip(poly)){ //If the polygon is a simple polygon then is part of the mesh
+                polygonal_mesh.push_back({e, poly});
+            }else{ //Else, the polygon is send to reparation phase
+                barrieredge_tip_reparation(e, poly);
+            }         
         }    
         t_end = std::chrono::high_resolution_clock::now();
         elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
-        std::cout<<"Polygons generated in "<<elapsed_time_ms<<" ms"<<std::endl;
-
-
+        std::cout<<"Polygons generated/repaired in "<<elapsed_time_ms<<" ms"<<std::endl;
+        
         this->m_polygons = polygonal_mesh.size();
         //tr->print_pg(std::to_string(tr->vertices()) + ".pg");             
-
-        //for (std::size_t e = 0; e < tr->halfEdges(); e++){
-        //    triangle t;
-        //    
-        //        t = tr->incident_face(e);
-        //        std::cout<<t[0]<<" "<<t[1]<<" "<<t[2]<<std::endl;
-        //    
-        //}
-
     }
 
     ~Polylla() {
