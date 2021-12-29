@@ -142,7 +142,7 @@ public:
         out<<tr->vertices()<<std::endl;
         //print nodes
         for(std::size_t v = 0; v < tr->vertices(); v++)
-            out<<std::setprecision(10)<<tr->get_PointX(v)<<" "<<tr->get_PointY(v)<<std::endl; 
+            out<<std::setprecision(15)<<tr->get_PointX(v)<<" "<<tr->get_PointY(v)<<std::endl; 
         out<<"# element connectivity: number of elements followed by the elements\n";
         out<<this->m_polygons<<std::endl;
         //print polygons
@@ -200,7 +200,7 @@ public:
         out<<"{ appearance  {+edge +face linewidth 2} LIST\n";
         out<<"OFF"<<std::endl;
         //num_vertices num_polygons 0
-        out<<tr->vertices()<<" "<<m_polygons<<" 0"<<std::endl;
+        out<<std::setprecision(15)<<tr->vertices()<<" "<<m_polygons<<" 0"<<std::endl;
         //print nodes
         for(std::size_t v = 0; v < tr->vertices(); v++)
             out<<tr->get_PointX(v)<<" "<<tr->get_PointY(v)<<" 0"<<std::endl; 
