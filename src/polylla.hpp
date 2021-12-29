@@ -15,7 +15,7 @@
 #include <cmath>
 #include <triangulation.hpp>
 #include <chrono>
-
+#include <iomanip>
 
 #define print_e(eddddge) eddddge<<" ( "<<tr->origin(eddddge)<<" - "<<tr->target(eddddge)<<") "
 
@@ -43,7 +43,8 @@ private:
     std::vector<std::size_t> seed_edges; //Seed edges that generate polygon simple and non-simple
 
     std::size_t m_polygons = 0; //Number of polygons
-
+    std::size_t n_frontier_edges = 0; //Number of frontier edges
+    std::size_t n_barrier_edge_tips = 0; //Number of barrier edge tips
 public:
 
     Polylla() {}; //Default constructor
@@ -76,8 +77,12 @@ public:
 
         t_start = std::chrono::high_resolution_clock::now();
         //Label frontier edges
-        for (std::size_t e = 0; e < tr->halfEdges(); e++)
-            frontier_edges[e] = is_frontier_edge(e);
+        for (std::size_t e = 0; e < tr->halfEdges(); e++){
+            if(is_frontier_edge(e)){
+                frontier_edges[e] = true;
+                n_frontier_edges++;
+            }
+        }
         t_end = std::chrono::high_resolution_clock::now();
         elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Labeled frontier edges in "<<elapsed_time_ms<<" ms"<<std::endl;
@@ -109,6 +114,8 @@ public:
         std::cout<<"Polygons generated/repaired in "<<elapsed_time_ms<<" ms"<<std::endl;
         
         this->m_polygons = polygonal_mesh.size();
+
+        std::cout<<"Mesh with "<<m_polygons<<" polygons "<<n_frontier_edges/2<<" edges and "<<n_barrier_edge_tips<<" barrier-edge tips."<<std::endl;
         //tr->print_pg(std::to_string(tr->vertices()) + ".pg");             
     }
 
@@ -124,6 +131,66 @@ public:
             std::cout << v << " ";
         }
         std::cout << std::endl;
+    }
+
+    //Print ale file of the polylla mesh
+    void print_ALE(std::string filename){
+        std::ofstream out(filename);
+        _polygon poly;
+        out<<"# domain type\nCustom\n";
+        out<<"# nodal coordinates: number of nodes followed by the coordinates \n";
+        out<<tr->vertices()<<std::endl;
+        //print nodes
+        for(std::size_t v = 0; v < tr->vertices(); v++)
+            out<<std::setprecision(10)<<tr->get_PointX(v)<<" "<<tr->get_PointY(v)<<std::endl; 
+        out<<"# element connectivity: number of elements followed by the elements\n";
+        out<<this->m_polygons<<std::endl;
+        //print polygons
+        for(auto &i : this->polygonal_mesh){
+            out<<i.vertices.size()<<" ";
+            for(auto &v : i.vertices){
+                out<<v<<" ";
+            }
+            out<<std::endl; 
+        }
+        //Print borderedges
+        out<<"# indices of nodes located on the Dirichlet boundary\n";
+        ///Find borderedges
+        std::size_t b_curr, b_init = 0;
+        for(std::size_t i = tr->halfEdges()-1; i != 0; i--){
+            if(tr->is_border_face(i)){
+                b_init = i;
+                break;
+            }
+        }
+        out<<tr->origin(b_init)<<" ";
+        b_curr = tr->prev(b_init);
+        while(b_init != b_curr){
+            out<<tr->origin(b_curr)<<" ";
+            b_curr = tr->prev(b_curr);
+        }
+        out<<std::endl;
+        out<<"# indices of nodes located on the Neumann boundary\n0\n";
+        out<<"# xmin, xmax, ymin, ymax of the bounding box\n";
+        double xmax = tr->get_PointX(0);
+        double xmin = tr->get_PointX(0);
+        double ymax = tr->get_PointY(0);
+        double ymin = tr->get_PointY(0);
+        //Search min and max coordinates
+        for(std::size_t v = 0; v < tr->vertices(); v++){
+            //search range x
+            if(tr->get_PointX(v) > xmax )
+                xmax = tr->get_PointX(v);
+            if(tr->get_PointX(v) < xmin )
+                xmin = tr->get_PointX(v);
+            //search range y
+            if(tr->get_PointY(v) > ymax )
+                ymax = tr->get_PointY(v);
+            if(tr->get_PointY(v) < ymin )
+                ymin = tr->get_PointY(v);
+        }
+        out<<xmin<<" "<<xmax<<" "<<ymin<<" "<<ymax<<std::endl;
+        out.close();
     }
 
     //Print off file of the polylla mesh
@@ -370,6 +437,8 @@ private:
             x = i;
             y = (i+2) % poly.size();
             if (poly[x] == poly[y]){
+                n_barrier_edge_tips++;
+                n_frontier_edges+=2;
                 //select edge with bet
                 v_bet= poly[(i+1) % poly.size()];
                 //middle edge that contains v_bet

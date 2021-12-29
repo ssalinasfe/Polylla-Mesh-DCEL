@@ -18,15 +18,15 @@ int main(int argc, char **argv) {
 
     if(argc < 5)
     {
-        std::cout<<"Usage: "<<argv[0]<<" <node_file .node> <ele_file .ele> <neigh_file .neigh> <output .off>"<<std::endl;
-		std::cout<<"Usage: "<<argv[0]<<" <node_file .node> <ele_file .ele> <neigh_file .neigh> <output .off> <output .hedge>"<<std::endl;
+        std::cout<<"Usage: "<<argv[0]<<" <node_file .node> <ele_file .ele> <neigh_file .neigh> <output name>"<<std::endl;
         return 0;
     }
 
 	std::string node_file = std::string(argv[1]);
 	std::string ele_file = std::string(argv[2]);
 	std::string neigh_file = std::string(argv[3]);
-	std::string output_off = std::string(argv[4]);
+	std::string output = std::string(argv[4]);
+
 	
 
     if(node_file.substr(node_file.find_last_of(".") + 1) != "node"){
@@ -43,13 +43,11 @@ int main(int argc, char **argv) {
     }
 	
 	Polylla mesh(node_file, ele_file, neigh_file);
-	std::cout<<"output off in "<<output_off<<std::endl;
-	mesh.print_OFF(output_off);
-    if(argc == 6){
-        std::string output_hedge = std::string(argv[5]);
-        std::cout<<"output hedge in "<<output_hedge<<std::endl;
-        mesh.print_hedge(output_hedge);
-    }
+    mesh.print_OFF(output+".off");
+	std::cout<<"output off in "<<output<<".off"<<std::endl;
+    mesh.print_ALE(output+".ale");
+    std::cout<<"output ale in "<<output<<".ale"<<std::endl;
+
 
 	return 0;
 }
