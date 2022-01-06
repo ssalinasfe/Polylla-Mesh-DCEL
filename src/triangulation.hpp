@@ -316,10 +316,13 @@ public:
         for(std::size_t i = 0; i < n_faces; i++)
             triangle_list.push_back(3*i);
 
-        std::cout<<"Generate halfedge.\nVertices "<<n_vertices<<", triangles: "<<n_faces<<", halfedges: "<<n_halfedges<<std::endl;
+        //std::cout<<"Generate halfedge.\nVertices "<<n_vertices<<", triangles: "<<n_faces<<", halfedges: "<<n_halfedges<<std::endl;
         //for(std::size_t i = 0; i < n_vertices; i++){
         //    vertex v = Vertices.at(i);
         //    std::cout<<"Vertex "<<i<<" "<<v.x<<" "<<v.y<<" "<<v.is_border<<std::endl;
+        //}
+        //for(std::size_t i = 0; i < n_faces; i++){
+        //    std::cout<<"Triangle "<<i<<" "<<faces.at(3*i)<<" "<<faces.at(3*i + 1)<<" "<<faces.at(3*i + 2)<<std::endl;
         //}
 
     }

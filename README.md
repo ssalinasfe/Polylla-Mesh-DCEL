@@ -119,10 +119,11 @@ Triangulazitation are generated with [triangle](https://www.cs.cmu.edu/~quake/tr
 - [ ] definir mejor cuáles variables son unsigned int y cuáles no
 - [X] Change by triangle bitvector by triangle list
 - [ ] Calculate distante edge
+- [ ] Read node files with commentaries
 
 ### TODO C++
 
-- [X] change uint to std::size_t
+- [ ] change to std::size_t to int
 - [X] change operator [] by .at()
 - [X] add #ifndef ALL_H_FILES #define ALL_H_FILES #endif to being and end header
 - [ ] add google tests

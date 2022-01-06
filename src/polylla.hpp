@@ -149,7 +149,7 @@ public:
         for(auto &i : this->polygonal_mesh){
             out<<i.vertices.size()<<" ";
             for(auto &v : i.vertices){
-                out<<v<<" ";
+                out<<v + 1<<" ";
             }
             out<<std::endl; 
         }
@@ -163,10 +163,10 @@ public:
                 break;
             }
         }
-        out<<tr->origin(b_init)<<" ";
+        out<<tr->origin(b_init) + 1<<" ";
         b_curr = tr->prev(b_init);
         while(b_init != b_curr){
-            out<<tr->origin(b_curr)<<" ";
+            out<<tr->origin(b_curr) + 1<<" ";
             b_curr = tr->prev(b_curr);
         }
         out<<std::endl;
