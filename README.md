@@ -93,7 +93,8 @@ Triangulazitation are generated with [triangle](https://www.cs.cmu.edu/~quake/tr
 - [ ] Change name plot_triangulation.py to plot_mesh.py
 
 ### TODO Poylla
-
+- [ ] Travel phase does not work with over big meshes (10^7)
+- [ ] Add high float point precision edge lenght comparision
 - [ ] POSIBLE BUG: el algoritmo no viaja por todos los halfedges dentro de un poligono, por lo que pueden haber semillas que no se borren y tener poligonos repetidos de output
 - [ ] Add arbitrary precision arithmetic in the label phase
 - [ ] Add frontier-edge addition to constrained segmend and refinement (agregar método que dividida un polygono dado una arista especifica)
@@ -128,6 +129,7 @@ Triangulazitation are generated with [triangle](https://www.cs.cmu.edu/~quake/tr
 - [X] add #ifndef ALL_H_FILES #define ALL_H_FILES #endif to being and end header
 - [ ] add google tests
 - [ ] Add google benchmark
+
 
 ### TODO github
 
