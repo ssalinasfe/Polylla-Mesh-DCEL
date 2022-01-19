@@ -290,9 +290,13 @@ private:
         this->n_halfedges = HalfEdges.size();
     }
 
+
     //Generate interior halfedges using a a vector with the faces of the triangulation
     void construct_interior_halfEdges_from_faces(std::vector<int> faces){
-        std::map<_edge, int> map_edges; //set of edges to calculate the boundary and twin edges
+        auto hash_for_pair = [](const std::pair<int, int>& p) {
+            return std::hash<int>{}(p.first) ^ std::hash<int>{}(p.second);
+        };
+        std::unordered_map<_edge, int, decltype(hash_for_pair)> map_edges(3*this->n_faces, hash_for_pair); //set of edges to calculate the boundary and twin edges
         for(std::size_t i = 0; i < n_faces; i++){
             halfEdge he0, he1, he2;
             int index_he0 = i*3+0;
@@ -342,7 +346,7 @@ private:
         this->n_halfedges = HalfEdges.size();
 
         //Calculate twin halfedge and boundary halfedges from set_edges
-        std::map<_edge,int>::iterator it;
+        std::unordered_map<_edge,int, decltype(hash_for_pair)>::iterator it;
         for(std::size_t i = 0; i < HalfEdges.size(); i++){
             //if halfedge has no twin
             if(HalfEdges.at(i).twin == -1){
