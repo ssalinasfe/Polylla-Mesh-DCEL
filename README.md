@@ -22,13 +22,15 @@ The algorithm needs a initial triangulation as input, any triangulations will wo
  <img src="https://github.com/ssalinasfe/Polylla-Mesh-DCEL/blob/main/images/pikachuPolylla.png" width="30%">
 </p>
 
+
+
 This triangulation is represented as a [.node file](https://www.cs.cmu.edu/~quake/triangle.node.html) with the nodes of the triangulations and the [boundary marker](https://www.cs.cmu.edu/~quake/triangle.markers.html), [.ele file](https://www.cs.cmu.edu/~quake/triangle.ele.html) with the triangles of the triangulations and a [.neigh file ](https://www.cs.cmu.edu/~quake/triangle.neigh.html) with the adjacencies of each triangle. 
 
 
 Input commands of polylla are:
 
 ```
-./Polylla <input .node> <input .ele> <input .neigh> <output .off> (opcional <output .hedges>)
+./Polylla <input .node> <input .ele> <input .neigh> <output filename>
 ```
 
 The output is an [.off file](https://en.wikipedia.org/wiki/OFF_(file_format)), and optionally an hedge files that contain the halfedges used by polylla mesh enumerate.
@@ -47,35 +49,17 @@ Note shape of the polygon depend on the initital triangulation, in the folowing 
 
 Scripts made to facilizate the process of test the algorithm:
 
- - (in data folder) To generate random points and an initial triangulation:
-
-    ```
-    ./datagenerator_withplotting.sh <number of vertices of triangulation>
-    ```
-
- - (in data folder) To generate random points, an initial triangulation and plot both with their vertices and halfedges labeled. Halfedges are labeled with the index left to it 
-    
-    ```
-    ./datagenerator_withplotting.sh <number of vertices of triangulation>
-    ```
-
  - (in build folder) To generate random points, an initital triangulation and a poylla mesh
 
     ```
-    ./datagenerator.sh <number of vertices of triangulation>
+    ./generatemesh.sh <number of vertices of triangulation>
     ```
 
 
- - (in build folder) To generate random points, an initital triangulation and a poylla mesh and plot the triangulation and polylla mesh
+ - (in build folder) To generate mesh from files .node, .ele, .neigh with the same name 
 
     ```
-    ./datagenerator.sh <number of vertices of triangulation>
-    ```
-
-- (in build folder) To generate poylla mesh from files with the same name and the same output
-
-    ```
-    ./datagenerator_withplotting.sh <name of file without extention>
+    ./generatefromfile.sh <filename> <output name>
     ```
 
 
@@ -95,7 +79,7 @@ Triangulazitation are generated with [triangle](https://www.cs.cmu.edu/~quake/tr
 ### TODO Poylla
 - [ ] Travel phase does not work with over big meshes (10^7)
 - [ ] Add high float point precision edge lenght comparision
-- [ ] POSIBLE BUG: el algoritmo no viaja por todos los halfedges dentro de un poligono, por lo que pueden haber semillas que no se borren y tener poligonos repetidos de output
+- [ ] POSIBLE BUG: el algoritmo no viaja por todos los halfedges dentro de un poligono en la travel phase, por lo que pueden haber semillas que no se borren y tener poligonos repetidos de output
 - [ ] Add arbitrary precision arithmetic in the label phase
 - [ ] Add frontier-edge addition to constrained segmend and refinement (agregar método que dividida un polygono dado una arista especifica)
 - [X] hacer la función distance parte de cada halfedge y cambiar el ciclo por 3 comparaciones.
@@ -111,11 +95,12 @@ Triangulazitation are generated with [triangle](https://www.cs.cmu.edu/~quake/tr
 
 ### TODO Halfedges 
 
+
 - [ ] edge_iterator;
 - [ ] face_iterator;
 - [ ] vertex_iterator;
 - [ ] copy constructor;
-- [ ] constructor indepent of triangle
+- [X] constructor indepent of triangle (any off file now works)
 - [X] default constructor
 - [ ] definir mejor cuáles variables son unsigned int y cuáles no
 - [X] Change by triangle bitvector by triangle list
@@ -124,7 +109,7 @@ Triangulazitation are generated with [triangle](https://www.cs.cmu.edu/~quake/tr
 
 ### TODO C++
 
-- [ ] change to std::size_t to int
+- [X] change to std::size_t to int
 - [X] change operator [] by .at()
 - [X] add #ifndef ALL_H_FILES #define ALL_H_FILES #endif to being and end header
 - [ ] add google tests
@@ -133,6 +118,7 @@ Triangulazitation are generated with [triangle](https://www.cs.cmu.edu/~quake/tr
 
 ### TODO github
 
+- [ ] Add how generate mesh from OFF file
 - [X] Add images that show how the initial trangulization changes the output
 - [X] Add the triangulation of the disks
 - [X] Hacer el readme más explicativo
