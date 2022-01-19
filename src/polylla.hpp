@@ -48,9 +48,20 @@ public:
 
     Polylla() {}; //Default constructor
 
+    //Constructor from a OFF file
+    Polylla(std::string off_file){
+        //std::cout<<"Generating Triangulization..."<<std::endl;
+        auto t_start = std::chrono::high_resolution_clock::now();
+        this->tr = new Triangulation(off_file);
+        auto t_end = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+        std::cout<<"Triangulation generated "<<elapsed_time_ms<<" ms"<<std::endl;
+
+        construct_Polylla();
+    }
+
+    //Constructor from a node_file, ele_file and neigh_file
     Polylla(std::string node_file, std::string ele_file, std::string neigh_file){
-        
-      
         //std::cout<<"Generating Triangulization..."<<std::endl;
         auto t_start = std::chrono::high_resolution_clock::now();
         this->tr = new Triangulation(node_file, ele_file, neigh_file);
@@ -58,20 +69,27 @@ public:
         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Triangulation generated "<<elapsed_time_ms<<" ms"<<std::endl;
 
+        construct_Polylla();
+    }
+
+    ~Polylla() {
+        delete tr;
+    }
+
+    void construct_Polylla(){
         max_edges = bit_vector(tr->halfEdges(), false);
         frontier_edges = bit_vector(tr->halfEdges(), false);
         terminal_edges = bit_vector(tr->halfEdges(), false);
         //seed_edges = bit_vector(tr->halfEdges(), false);
         triangles = tr->get_Triangles(); //Change by triangle list
 
-
         //Label max edges of each triangle
         //for (size_t t = 0; t < tr->faces(); t++){
-        t_start = std::chrono::high_resolution_clock::now();
+        auto t_start = std::chrono::high_resolution_clock::now();
         for(auto &t : triangles)
             max_edges[label_max_edge(t)] = true;   
-        t_end = std::chrono::high_resolution_clock::now();
-        elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+        auto t_end = std::chrono::high_resolution_clock::now();
+        double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Labered max edges in "<<elapsed_time_ms<<" ms"<<std::endl;
 
         t_start = std::chrono::high_resolution_clock::now();
@@ -117,11 +135,6 @@ public:
         std::cout<<"Mesh with "<<m_polygons<<" polygons "<<n_frontier_edges/2<<" edges and "<<n_barrier_edge_tips<<" barrier-edge tips."<<std::endl;
         //tr->print_pg(std::to_string(tr->vertices()) + ".pg");             
     }
-
-    ~Polylla() {
-        delete tr;
-    }
-
 
     //function whose input is a vector and print the elements of the vector
     void print_vector(std::vector<int> &vec){

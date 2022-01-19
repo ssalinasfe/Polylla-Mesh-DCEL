@@ -42,7 +42,7 @@ TODO:
 #include <fstream>
 #include <cmath>
 #include <sstream>
-
+#include <set>
 
 
 struct vertex{
@@ -69,7 +69,7 @@ class Triangulation
 
 private:
 
-    typedef std::array<int,3> triangle; 
+    typedef std::array<int,3> _triangle; 
     int n_halfedges = 0; //number of halfedges
     int n_faces = 0; //number of faces
     int n_vertices = 0; //number of vertices
@@ -330,7 +330,7 @@ private:
 
             //Read vertices
             int index = 0;
-			while (index < n_vertices  && std::getline(offfile, line) )
+			while (index < n_vertices && std::getline(offfile, line) )
 			{
 				std::istringstream(line) >> tmp;
 				if (tmp[0] != '#' ) //check if first element is a comentary
@@ -347,7 +347,7 @@ private:
             
             int lenght, t1, t2, t3;
             index = 0;
-			while (index < n_faces  && std::getline(offfile, line) )
+			while (index < n_faces && std::getline(offfile, line) )
 			{
 				std::istringstream(line) >> tmp;
 				if (tmp[0] != '#' ) //check if first element is a comentary
@@ -413,10 +413,82 @@ public:
             vertex v = Vertices.at(i);
             std::cout<<"Vertex "<<i<<" "<<v.x<<" "<<v.y<<" "<<v.is_border<<std::endl;
         }
+
+
+        _triangle t;
+        std::set<_edge> set_edges; //set of edges to calculate the boundary and twin edges
+        for(std::size_t i = 0; i < n_faces; i++){
+            halfEdge he0, he1, he2;
+            int index_he0 = i*3+0;
+            int index_he1 = i*3+1;
+            int index_he2 = i*3+2;
+            int v0 = faces.at(3*i+0);
+            int v1 = faces.at(3*i+1);
+            int v2 = faces.at(3*i+2);
+            
+            he0.origin = v0;
+            he0.target = v1;
+            he0.next = index_he1;
+            he0.prev = index_he2;
+            he0.face = i;
+            he0.is_border = false;
+            he0.twin = -1;
+            //falta twin
+            Vertices.at(v0).incident_halfedge = index_he0;
+            
+            set_edges.insert(std::make_pair(v0, v1));
+            HalfEdges.push_back(he0);
+            
+            he1.origin = v1;
+            he1.target = v2;
+            he1.next = index_he2;
+            he1.prev = index_he0;
+            he1.face = i;
+            he1.is_border = false;
+            he1.twin = -1;
+            Vertices.at(v1).incident_halfedge = index_he1;
+            
+            set_edges.insert(std::make_pair(v1, v2));
+            HalfEdges.push_back(he1);
+
+            he2.origin = v2;
+            he2.target = v0;
+            he2.next = index_he0;
+            he2.prev = index_he1;
+            he2.face = i;
+            he2.is_border = false;
+            he2.twin = -1;
+            Vertices.at(v2).incident_halfedge = index_he2;
+            set_edges.insert(std::make_pair(v2, v0));
+            HalfEdges.push_back(he2);
+        }
+
+        //Calculate twin halfedge and boundary halfedges from set_edges
+        std::set<_edge>::iterator it;
+        for(std::size_t i = 0; i < HalfEdges.size(); i++){
+            //if halfedge has no twin
+            if(HalfEdges.at(i).twin == -1){
+                _edge twin = std::make_pair(HalfEdges.at(i).target,HalfEdges.at(i).origin);
+                it=set_edges.find(twin);
+                //if twin is found
+                if(it!=set_edges.end()){
+                    int index_twin = std::distance(set_edges.begin(), it);
+                    std::cout<<"Twin found: "<<index_twin<<std::endl;
+                    HalfEdges.at(i).twin = index_twin;
+                    HalfEdges.at(index_twin).twin = i;
+                }else{ //if twin is not found and halfedge is on the boundary
+                    HalfEdges.at(i).is_border = true;
+                    Vertices.at(HalfEdges.at(i).origin).is_border = true;
+                    Vertices.at(HalfEdges.at(i).target).is_border = true;
+                }
+            }
+        }
         
+        construct_exterior_halfEdges();
+
+        triangle_list.reserve(n_faces);
         for(std::size_t i = 0; i < n_faces; i++)
-            std::cout<<"Face "<<i<<" "<<faces.at(3*i)<<" "<<faces.at(3*i + 1)<<" "<<faces.at(3*i + 2)<<std::endl;
-    
+            triangle_list.push_back(3*i);
     }
 
     //print the triangulation in pg file format
@@ -464,9 +536,9 @@ public:
     //Return triangle of the face incident to edge e
     //Input: e is the edge
     //output: array with the vertices of the triangle
-    triangle incident_face(int e)
+    _triangle incident_face(int e)
     {   
-        triangle face;  
+        _triangle face;  
         int nxt = e;
         int init_vertex = origin(nxt);
         int curr_vertex = -1;
@@ -484,7 +556,7 @@ public:
     //function to check if a triangle is counterclockwise
     //Input: array with the vertices of the triangle
     //Output: true if the triangle is counterclockwise, false otherwise
-    bool is_counterclockwise(triangle tr)
+    bool is_counterclockwise(_triangle tr)
     {
         int v0 = tr.at(0);
         int v1 = tr.at(1);

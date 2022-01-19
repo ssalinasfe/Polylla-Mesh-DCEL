@@ -15,7 +15,6 @@
 
 int main(int argc, char **argv) {
 
-    Triangulation(std::string(argv[1]));
 
     /*
     if(argc < 5)
@@ -43,13 +42,17 @@ int main(int argc, char **argv) {
         std::cout<<"Error: neigh file must be .neigh"<<std::endl;
         return 0;
     }
-	
-	Polylla mesh(node_file, ele_file, neigh_file);
+	*/
+
+    std::string off_file = std::string(argv[1]);
+    std::string output = std::string(argv[2]);
+
+	Polylla mesh(off_file);
     mesh.print_OFF(output+".off");
 	std::cout<<"output off in "<<output<<".off"<<std::endl;
     mesh.print_ALE(output+".ale");
     std::cout<<"output ale in "<<output<<".ale"<<std::endl;
     
-    */
+    
 	return 0;
 }
