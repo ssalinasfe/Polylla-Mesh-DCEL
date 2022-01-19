@@ -80,6 +80,9 @@ Scripts made to facilizate the process of test the algorithm:
     ./generatefromfile.sh <filename> <output name>
     ```
 
+   ```
+    ./generatefromfile.sh pikachu.1 out
+   ```
 
 Triangulazitation are generated with [triangle](https://www.cs.cmu.edu/~quake/triangle.html) with the [command -zn](https://www.cs.cmu.edu/~quake/triangle.switch.html).
 
