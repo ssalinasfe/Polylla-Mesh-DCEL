@@ -6,7 +6,7 @@
 #include <fstream>
 #include <polylla.hpp>
 
-//#include <triangulation.hpp>
+#include <triangulation.hpp>
 
 //#include <compresshalfedge.hpp>
 //#include <io_void.hpp>
@@ -15,7 +15,9 @@
 
 int main(int argc, char **argv) {
 
+    Triangulation(std::string(argv[1]));
 
+    /*
     if(argc < 5)
     {
         std::cout<<"Usage: "<<argv[0]<<" <node_file .node> <ele_file .ele> <neigh_file .neigh> <output name>"<<std::endl;
@@ -47,7 +49,7 @@ int main(int argc, char **argv) {
 	std::cout<<"output off in "<<output<<".off"<<std::endl;
     mesh.print_ALE(output+".ale");
     std::cout<<"output ale in "<<output<<".ale"<<std::endl;
-
-
+    
+    */
 	return 0;
 }

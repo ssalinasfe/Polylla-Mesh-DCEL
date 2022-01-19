@@ -67,7 +67,8 @@ struct halfEdge {
 class Triangulation 
 {
 
-public:
+private:
+
     typedef std::array<int,3> triangle; 
     int n_halfedges = 0; //number of halfedges
     int n_faces = 0; //number of faces
@@ -76,8 +77,7 @@ public:
     std::vector<halfEdge> HalfEdges; //list of edges
     //std::vector<char> triangle_flags; //list of edges that generate a unique triangles, 
     std::vector<int> triangle_list; //list of edges that generate a unique triangles, 
-
-private:
+    typedef std::pair<int,int> _edge;
 
     //Read node file in .node format and nodes in point vector
     void read_nodes_from_file(std::string name){
@@ -119,7 +119,7 @@ private:
         {
             elefile >> n_faces;
             //std::cout<<pnumber<<std::endl;
-            faces.reserve(n_faces);
+            faces.reserve(3*n_faces);
             std::getline(elefile, line); //skip the first line
             while (std::getline(elefile, line))
             {
@@ -149,7 +149,7 @@ private:
         {
             neighfile >> n_faces;
             //std::cout<<pnumber<<std::endl;
-            neighs.reserve(n_faces);
+            neighs.reserve(3*n_faces);
             std::getline(neighfile, line); //skip the first line
             while (std::getline(neighfile, line))
             {
@@ -290,6 +290,84 @@ private:
         this->n_halfedges = HalfEdges.size();
     }
 
+    //Read the mesh from a file in OFF format
+    std::vector<int> read_OFFfile(std::string name){
+        //Read the OFF file
+        std::vector<int> faces;
+		std::string line;
+		std::ifstream offfile(name);
+		double a1, a2, a3;
+		std::string tmp;
+		if (offfile.is_open())
+		{
+            //Check first line is a OFF file
+			while (std::getline(offfile, line)){ //add check boundary vertices flag
+				std::istringstream(line) >> tmp;
+				if (tmp[0] != '#' ) //check if first element is a comentary
+				{
+					if(tmp[0] == 'O' && tmp[1] == 'F' && tmp[2] == 'F') //Check if the format is OFF
+                        break;
+                    else{
+                        std::cout<<"The file is not an OFF file"<<std::endl;
+                        exit(0);
+                    }
+				}
+			}
+
+            //Read the number of vertices and faces
+            
+            while (std::getline(offfile, line)){ //add check boundary vertices flag
+				std::istringstream(line) >> tmp;
+				if (tmp[0] != '#' ) //check if first element is a comentary
+				{
+						std::istringstream(line) >> this->n_vertices >> this->n_faces;
+                        std::cout<<"Number of vertices: "<<this->n_vertices<<std::endl;
+			            this->Vertices.reserve(this->n_vertices);
+                        faces.reserve(3*this->n_faces);
+						break;
+				}
+			}
+
+            //Read vertices
+            int index = 0;
+			while (index < n_vertices  && std::getline(offfile, line) )
+			{
+				std::istringstream(line) >> tmp;
+				if (tmp[0] != '#' ) //check if first element is a comentary
+				{
+					std::istringstream(line) >> a1 >> a2 >> a3;
+					vertex ve;
+                    ve.x =  a1;
+                    ve.y =  a2;
+                    this->Vertices.push_back(ve);
+                    index++;
+				}
+			}
+            //Read faces
+            
+            int lenght, t1, t2, t3;
+            index = 0;
+			while (index < n_faces  && std::getline(offfile, line) )
+			{
+				std::istringstream(line) >> tmp;
+				if (tmp[0] != '#' ) //check if first element is a comentary
+				{
+                    std::istringstream(line) >> lenght >> t1 >> t2 >> t3;
+                    faces.push_back(t1);
+                    faces.push_back(t2);
+                    faces.push_back(t3);
+                    index++;
+				}
+			}
+
+		}
+		else 
+				std::cout << "Unable to open node file"; 
+		offfile.close();
+        return faces;
+    }
+
+
 public:
 
     //default constructor
@@ -325,6 +403,20 @@ public:
         //    std::cout<<"Triangle "<<i<<" "<<faces.at(3*i)<<" "<<faces.at(3*i + 1)<<" "<<faces.at(3*i + 2)<<std::endl;
         //}
 
+    }
+
+    Triangulation(std::string OFF_file){
+        std::cout<<"Reading OFF file "<<OFF_file<<std::endl;
+        std::vector<int> faces = read_OFFfile(OFF_file);
+        std::cout<<n_vertices<<" "<<n_faces<<std::endl;
+        for(std::size_t i = 0; i < n_vertices; i++){
+            vertex v = Vertices.at(i);
+            std::cout<<"Vertex "<<i<<" "<<v.x<<" "<<v.y<<" "<<v.is_border<<std::endl;
+        }
+        
+        for(std::size_t i = 0; i < n_faces; i++)
+            std::cout<<"Face "<<i<<" "<<faces.at(3*i)<<" "<<faces.at(3*i + 1)<<" "<<faces.at(3*i + 2)<<std::endl;
+    
     }
 
     //print the triangulation in pg file format

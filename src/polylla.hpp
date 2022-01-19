@@ -28,7 +28,6 @@ struct Polygon{
 class Polylla
 {
 private:
-    typedef std::array<int,3> triangle; //triangle
     typedef std::vector<int> _polygon; 
     typedef std::vector<char> bit_vector; 
 
