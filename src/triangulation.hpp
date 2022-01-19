@@ -42,8 +42,8 @@ TODO:
 #include <fstream>
 #include <cmath>
 #include <sstream>
-#include <set>
-
+#include <unordered_map>
+#include <map>
 
 struct vertex{
     double x;
@@ -409,14 +409,9 @@ public:
         std::cout<<"Reading OFF file "<<OFF_file<<std::endl;
         std::vector<int> faces = read_OFFfile(OFF_file);
         std::cout<<n_vertices<<" "<<n_faces<<std::endl;
-        for(std::size_t i = 0; i < n_vertices; i++){
-            vertex v = Vertices.at(i);
-            std::cout<<"Vertex "<<i<<" "<<v.x<<" "<<v.y<<" "<<v.is_border<<std::endl;
-        }
-
 
         _triangle t;
-        std::set<_edge> set_edges; //set of edges to calculate the boundary and twin edges
+        std::map<_edge, int> map_edges; //set of edges to calculate the boundary and twin edges
         for(std::size_t i = 0; i < n_faces; i++){
             halfEdge he0, he1, he2;
             int index_he0 = i*3+0;
@@ -436,7 +431,7 @@ public:
             //falta twin
             Vertices.at(v0).incident_halfedge = index_he0;
             
-            set_edges.insert(std::make_pair(v0, v1));
+            map_edges[std::make_pair(v0, v1)] = index_he0;
             HalfEdges.push_back(he0);
             
             he1.origin = v1;
@@ -448,7 +443,7 @@ public:
             he1.twin = -1;
             Vertices.at(v1).incident_halfedge = index_he1;
             
-            set_edges.insert(std::make_pair(v1, v2));
+            map_edges[std::make_pair(v1, v2)] = index_he1;
             HalfEdges.push_back(he1);
 
             he2.origin = v2;
@@ -459,31 +454,37 @@ public:
             he2.is_border = false;
             he2.twin = -1;
             Vertices.at(v2).incident_halfedge = index_he2;
-            set_edges.insert(std::make_pair(v2, v0));
+
+            map_edges[std::make_pair(v2, v0)] = index_he2;            
             HalfEdges.push_back(he2);
+        }
+        this->n_halfedges = HalfEdges.size();
+
+        for(std::size_t i = 0; i < HalfEdges.size(); i++){
+            std::cout<<"Halfedge "<<i<<" "<<HalfEdges.at(i).origin<<" "<<HalfEdges.at(i).target<<" "<<map_edges.at(std::make_pair(HalfEdges.at(i).origin, HalfEdges.at(i).target))<<std::endl;
         }
 
         //Calculate twin halfedge and boundary halfedges from set_edges
-        std::set<_edge>::iterator it;
+        std::map<_edge,int>::iterator it;
         for(std::size_t i = 0; i < HalfEdges.size(); i++){
             //if halfedge has no twin
             if(HalfEdges.at(i).twin == -1){
                 _edge twin = std::make_pair(HalfEdges.at(i).target,HalfEdges.at(i).origin);
-                it=set_edges.find(twin);
+                it=map_edges.find(twin);
                 //if twin is found
-                if(it!=set_edges.end()){
-                    int index_twin = std::distance(set_edges.begin(), it);
-                    std::cout<<"Twin found: "<<index_twin<<std::endl;
+                if(it!=map_edges.end()){
+                    int index_twin = it->second;
+                    std::cout<<"Twin "<<i<<" found: "<<index_twin<<std::endl;
                     HalfEdges.at(i).twin = index_twin;
                     HalfEdges.at(index_twin).twin = i;
                 }else{ //if twin is not found and halfedge is on the boundary
+                    std::cout<<"Halfedge "<<i<<" is on the boundary"<<std::endl;
                     HalfEdges.at(i).is_border = true;
                     Vertices.at(HalfEdges.at(i).origin).is_border = true;
                     Vertices.at(HalfEdges.at(i).target).is_border = true;
                 }
             }
         }
-        
         construct_exterior_halfEdges();
 
         triangle_list.reserve(n_faces);
