@@ -51,6 +51,7 @@ int main(int argc, char **argv) {
         mesh.print_ALE(output+".ale");
         std::cout<<"output ale in "<<output<<".ale"<<std::endl;
     }else{
+        std::cout<<"Usage: "<<argv[0]<<" <off file .off> <output name>"<<std::endl;
         std::cout<<"Usage: "<<argv[0]<<" <node_file .node> <ele_file .ele> <neigh_file .neigh> <output name>"<<std::endl;
         return 0;
     }
