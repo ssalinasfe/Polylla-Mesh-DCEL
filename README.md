@@ -23,8 +23,13 @@ The algorithm needs a initial triangulation as input, any triangulations will wo
 </p>
 
 
+## IO formats
 
-This triangulation is represented as a [.node file](https://www.cs.cmu.edu/~quake/triangle.node.html) with the nodes of the triangulations and the [boundary marker](https://www.cs.cmu.edu/~quake/triangle.markers.html), [.ele file](https://www.cs.cmu.edu/~quake/triangle.ele.html) with the triangles of the triangulations and a [.neigh file ](https://www.cs.cmu.edu/~quake/triangle.neigh.html) with the adjacencies of each triangle. 
+The algorithm supports two file formats as input, the output is an [.off file](https://en.wikipedia.org/wiki/OFF_(file_format)) and an .ale file use for the VEM.
+
+## Input as  .node, .ele, .neigh files
+
+Triangulation is represented as a [.node file](https://www.cs.cmu.edu/~quake/triangle.node.html) with the nodes of the triangulations and the [boundary marker](https://www.cs.cmu.edu/~quake/triangle.markers.html), [.ele file](https://www.cs.cmu.edu/~quake/triangle.ele.html) with the triangles of the triangulations and a [.neigh file ](https://www.cs.cmu.edu/~quake/triangle.neigh.html) with the adjacencies of each triangle. 
 
 
 Input commands of polylla are:
@@ -33,7 +38,20 @@ Input commands of polylla are:
 ./Polylla <input .node> <input .ele> <input .neigh> <output filename>
 ```
 
-The output is an [.off file](https://en.wikipedia.org/wiki/OFF_(file_format)), and optionally an hedge files that contain the halfedges used by polylla mesh enumerate.
+Example to generate pikachu
+
+```
+./Polylla ./Polylla pikachu.1.node pikachu.1.ele pikachu.1.neigh out
+```
+
+
+## Input as a .off file
+
+
+```
+./Polylla <input .off> <output filename>
+```
+
 
 ## Shape of polygons
 
