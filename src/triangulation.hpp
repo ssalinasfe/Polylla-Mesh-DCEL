@@ -670,8 +670,6 @@ public:
         return Vertices.at(v).incident_halfedge;
     }
 
-
-
     //Input: edge e
     //Output: true if is the face of e is border face
     //        false otherwise
