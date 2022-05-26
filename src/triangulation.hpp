@@ -70,6 +70,8 @@ class Triangulation
 private:
 
     typedef std::array<int,3> _triangle; 
+    typedef std::pair<int,int> _edge;
+
     int n_halfedges = 0; //number of halfedges
     int n_faces = 0; //number of faces
     int n_vertices = 0; //number of vertices
@@ -77,7 +79,7 @@ private:
     std::vector<halfEdge> HalfEdges; //list of edges
     //std::vector<char> triangle_flags; //list of edges that generate a unique triangles, 
     std::vector<int> triangle_list; //list of edges that generate a unique triangles, 
-    typedef std::pair<int,int> _edge;
+    
 
     //Read node file in .node format and nodes in point vector
     void read_nodes_from_file(std::string name){
@@ -470,7 +472,6 @@ public:
         triangle_list.reserve(n_faces);
         for(std::size_t i = 0; i < n_faces; i++)
             triangle_list.push_back(3*i);
-
     }
 
     Triangulation(std::string OFF_file){
@@ -482,6 +483,16 @@ public:
         triangle_list.reserve(n_faces);
         for(std::size_t i = 0; i < n_faces; i++)
             triangle_list.push_back(3*i);
+    }
+
+    // Copy constructor
+    Triangulation(const Triangulation &t) {
+        this->n_vertices = t.n_vertices;
+        this->n_faces = t.n_faces;
+        this->n_halfedges = t.n_halfedges;
+        this->Vertices = t.Vertices;
+        this->HalfEdges = t.HalfEdges;
+        this->triangle_list = t.triangle_list;
     }
 
     //print the triangulation in pg file format
@@ -691,6 +702,22 @@ public:
     bool is_border_vertex(int v)
     {
         return Vertices.at(v).is_border;
+    }
+
+    //Halfedge update operations
+    void set_next(int e, int nxt)
+    {
+        HalfEdges.at(e).next = nxt;
+    }
+
+    void set_prev(int e, int prv)
+    {
+        HalfEdges.at(e).prev = prv;
+    }
+
+    void set_face(int e, int f)
+    {
+        HalfEdges.at(e).face = f;
     }
 
 };
