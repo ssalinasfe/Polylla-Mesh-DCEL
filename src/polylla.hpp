@@ -60,6 +60,8 @@ public:
         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Triangulation generated "<<elapsed_time_ms<<" ms"<<std::endl;
 
+        //call copy constructor
+        mesh_output = new Triangulation(*tr);
         construct_Polylla();
     }
 
@@ -72,6 +74,8 @@ public:
         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Triangulation generated "<<elapsed_time_ms<<" ms"<<std::endl;
 
+        //call copy constructor
+        mesh_output = new Triangulation(*tr);
         construct_Polylla();
     }
 
@@ -81,7 +85,7 @@ public:
 
     void construct_Polylla(){
 
-        mesh_output = tr;
+        
 
         max_edges = bit_vector(tr->halfEdges(), false);
         frontier_edges = bit_vector(tr->halfEdges(), false);
@@ -121,17 +125,23 @@ public:
 
 
         //Travel phase: Generate polygon mesh
-
+        int polygon_seed;
         //Foreach seed edge generate polygon
         t_start = std::chrono::high_resolution_clock::now();
         for(auto &e : seed_edges){
-            output_seeds.push_back(travel_triangles(e));
-            
-            //if(!has_BarrierEdgeTip(poly)){ //If the polygon is a simple polygon then is part of the mesh
-            //    polygonal_mesh.push_back({e, poly});
-            //}else{ //Else, the polygon is send to reparation phase
-            //    barrieredge_tip_reparation(e, poly);
-            //}         
+            polygon_seed = travel_triangles(e);
+
+            //output_seeds.push_back(polygon_seed);
+            //if(has_BarrierEdgeTip(polygon_seed))
+            //    std::cout<<"Polygon "<<e<<" has barrier edge tip"<<std::endl;
+
+            if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
+                output_seeds.push_back(polygon_seed);
+            }else{ //Else, the polygon is send to reparation phase
+                std::cout<<"Polygon "<<polygon_seed<<" is a barrier edge tip"<<std::endl;
+                //barrieredge_tip_reparation(e);
+                output_seeds.push_back(polygon_seed);
+            }         
         }    
         t_end = std::chrono::high_resolution_clock::now();
         elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
@@ -227,20 +237,20 @@ public:
         int size_poly;
         int e_curr;
         for(auto &e_init : output_seeds){
-            size_poly = 0;
+            size_poly = 1;
             e_curr = mesh_output->next(e_init);
             while(e_init != e_curr){
                 size_poly++;
                 e_curr = mesh_output->next(e_curr);
             }
-            out<<size_poly + 1<<" ";            
+            out<<size_poly<<" ";            
 
+            out<<mesh_output->origin(e_init)<<" ";
             e_curr = mesh_output->next(e_init);
             while(e_init != e_curr){
                 out<<mesh_output->origin(e_curr)<<" ";
                 e_curr = mesh_output->next(e_curr);
             }
-            out<<mesh_output->origin(e_curr)<<" ";
             out<<std::endl; 
         }
         out<<"}"<<std::endl;
@@ -379,15 +389,20 @@ private:
     }
 
     //return true if the polygon is not simple
-    bool has_BarrierEdgeTip(std::vector<int> poly){
-        int length_poly = poly.size();
-        int x, y, i;
-        for (i = 0; i < length_poly; i++)
-        {
-            x = i % length_poly;
-            y = (i+2) % length_poly;
-            if (poly[x] == poly[y])
+    bool has_BarrierEdgeTip(int e_init){
+
+        int e_curr = mesh_output->next(e_init);
+        
+        //travel inside frontier-edges of polygon
+        while(e_curr != e_init)
+        {   
+            //if the twin of the next halfedge is the current halfedge, then the polygon is not simple
+            if( mesh_output->twin(mesh_output->next(e_curr)) == e_curr){
                 return true;
+            }
+            
+            //travel to next half-edge
+            e_curr = mesh_output->next(e_curr);
         }
         return false;
     }   
@@ -429,11 +444,12 @@ private:
     //Given a barrier-edge tip v, return the middle edge incident to v
     //The function first calculate the degree of v - 1 and then divide it by 2, after travel to until the middle-edge
     //input: vertex v
-    //output: edge incident to v
-    int search_middle_edge(const int v_bet)
+    //output: middle edge incident to v
+    int search_middle_edge(const int v_bet, const int e_curr)
     {
+        
         //select frontier-edge of barrier-edge tip
-        int frontieredge_with_bet = this->search_frontier_edge(tr->edge_of_vertex(v_bet));
+        int frontieredge_with_bet = tr->twin(e_curr);
         int nxt = tr->CW_edge_to_vertex(frontieredge_with_bet);
         int adv = 1; 
         //calculates the degree of v_bet
@@ -461,35 +477,42 @@ private:
         return nxt;
     }
 
-    //Given a seed edge e and a polygon poly generated by e, split the polygon until remove al barrier-edge tips
+    //Given a seed edge e that generated polygon, split the polygon until remove al barrier-edge tips
     //input: seed edge e, polygon poly
     //output: polygon without barrier-edge tips
-    void barrieredge_tip_reparation(const int e, std::vector<int> &poly)
+    void barrieredge_tip_reparation(const int e)
     {
         int x, y, i;
         int t1, t2;
         int middle_edge, v_bet;
 
-        //list is initialize
         std::vector<int> triangle_list;
         bit_vector seed_bet_mark(this->tr->halfEdges(), false);
-        //look for barrier-edge tips
-        for (i = 0; i < poly.size(); i++)
-        {
-            x = i;
-            y = (i+2) % poly.size();
-            if (poly[x] == poly[y]){
+
+        int e_init = e;
+        int e_curr = mesh_output->next(e_init);
+        //search by barrier-edge tips
+        while(e_curr != e_init)
+        {   
+            //if the twin of the next halfedge is the current halfedge, then the polygon is not simple
+            if( mesh_output->twin(mesh_output->next(e_curr)) == e_curr){
+                std::cout<<"e_curr "<<e_curr<<" e_next "<<mesh_output->next(e_curr)<<" next del next "<<mesh_output->next(mesh_output->next(e_curr))<<std::endl;
+
                 n_barrier_edge_tips++;
                 n_frontier_edges+=2;
+
                 //select edge with bet
-                v_bet= poly[(i+1) % poly.size()];
+                v_bet = mesh_output->target(e_curr);
+                middle_edge = search_middle_edge(v_bet, e_curr);
+
                 //middle edge that contains v_bet
-                middle_edge = search_middle_edge(v_bet);
                 t1 = middle_edge;
-                t2 = tr->twin(middle_edge);
+                t2 = mesh_output->twin(middle_edge);
+                
                 //edges of middle-edge are labeled as frontier-edge
                 this->frontier_edges[t1] = true;
                 this->frontier_edges[t2] = true;
+
                 //edges are use as seed edges and saves in a list
                 triangle_list.push_back(t1);
                 triangle_list.push_back(t2);
@@ -497,32 +520,36 @@ private:
                 seed_bet_mark[t1] = true;
                 seed_bet_mark[t2] = true;
             }
+            
+            //travel to next half-edge
+            e_curr = mesh_output->next(e_curr);
         }
+        
         int t_curr;
-        _polygon poly_curr;
         //generate polygons from seeds,
         //two seeds can generate the same polygon
         //so the bit_vector seed_bet_mark is used to label as false the edges that are already used
+        int new_polygon_seed;
         while (!triangle_list.empty())
         {
             t_curr = triangle_list.back();
             triangle_list.pop_back();
             if(seed_bet_mark[t_curr]){
                 seed_bet_mark[t_curr] = false;
-                poly_curr = generate_repaired_polygon(t_curr, seed_bet_mark);
+                new_polygon_seed = generate_repaired_polygon(t_curr, seed_bet_mark);
                 //Store the polygon in the as part of the mesh
-                this->polygonal_mesh.push_back({t_curr, poly_curr});
+                output_seeds.push_back(new_polygon_seed);
             }
         }
+
     }
 
 
     //Generate a polygon from a seed-edge and remove repeated seed from seed_list
     //POSIBLE BUG: el algoritmo no viaja por todos los halfedges dentro de un poligono, 
     //por lo que pueden haber semillas que no se borren y tener poligonos repetidos de output
-    _polygon generate_repaired_polygon(const int e, bit_vector &seed_list)
+    int generate_repaired_polygon(const int e, bit_vector &seed_list)
     {   
-        _polygon poly;
         int e_init = e;
         //search next frontier-edge
         while(!frontier_edges[e_init])
@@ -531,12 +558,15 @@ private:
             seed_list[e_init] = false; 
             //seed_list[tr->twin(e_init)] = false;
         }        
+        //first frontier-edge is store to calculate the prev of next frontier-edfge
+        int e_prev = e_init; 
         int v_init = tr->origin(e_init);
+
         int e_curr = tr->next(e_init);
         int v_curr = tr->origin(e_curr);
-        poly.push_back(v_curr);
         seed_list[e_curr] = false;
-        //seed_list[tr->twin(e_curr)] = false;
+
+        //travel inside frontier-edges of polygon
         while(e_curr != e_init && v_curr != v_init)
         {   
             while(!frontier_edges[e_curr])
@@ -545,15 +575,22 @@ private:
                 seed_list[e_curr] = false;
           //      seed_list[tr->twin(e_curr)] = false;
             } 
-            seed_list[e_curr] = false;
-            //seed_list[tr->twin(e_curr)] = false;
+
+            //update next of previous frontier-edge
+            mesh_output->set_next(e_prev, e_curr);  
+            //update prev of current frontier-edge
+            mesh_output->set_prev(e_curr, e_prev);
+
+            //travel to next half-edge
+            e_prev = e_curr;        
             e_curr = tr->next(e_curr);
             v_curr = tr->origin(e_curr);
-            poly.push_back(v_curr);
             seed_list[e_curr] = false;
             //seed_list[tr->twin(e_curr)] = false;
         }
-        return poly;
+        mesh_output->set_next(e_prev, e_init);
+        mesh_output->set_prev(e_init, e_prev);
+        return e_init;
     }
 };
 
