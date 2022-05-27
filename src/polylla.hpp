@@ -138,9 +138,9 @@ public:
             if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
                 output_seeds.push_back(polygon_seed);
             }else{ //Else, the polygon is send to reparation phase
-                std::cout<<"Polygon "<<polygon_seed<<" is a barrier edge tip"<<std::endl;
-                //barrieredge_tip_reparation(e);
-                output_seeds.push_back(polygon_seed);
+                barrieredge_tip_reparation(polygon_seed);
+                //output_seeds.push_back(polygon_seed);
+                
             }         
         }    
         t_end = std::chrono::high_resolution_clock::now();
@@ -496,7 +496,7 @@ private:
         {   
             //if the twin of the next halfedge is the current halfedge, then the polygon is not simple
             if( mesh_output->twin(mesh_output->next(e_curr)) == e_curr){
-                std::cout<<"e_curr "<<e_curr<<" e_next "<<mesh_output->next(e_curr)<<" next del next "<<mesh_output->next(mesh_output->next(e_curr))<<std::endl;
+                //std::cout<<"e_curr "<<e_curr<<" e_next "<<mesh_output->next(e_curr)<<" next del next "<<mesh_output->next(mesh_output->next(e_curr))<<" twin curr "<<mesh_output->twin(e_curr)<<" twin next "<<mesh_output->twin(mesh_output->next(e_curr))<<std::endl;
 
                 n_barrier_edge_tips++;
                 n_frontier_edges+=2;
@@ -520,11 +520,11 @@ private:
                 seed_bet_mark[t1] = true;
                 seed_bet_mark[t2] = true;
             }
-            
+                
             //travel to next half-edge
             e_curr = mesh_output->next(e_curr);
         }
-        
+
         int t_curr;
         //generate polygons from seeds,
         //two seeds can generate the same polygon
