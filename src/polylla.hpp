@@ -17,7 +17,7 @@
 #include <chrono>
 #include <iomanip>
 
-#define print_e(eddddge) eddddge<<" ( "<<tr->origin(eddddge)<<" - "<<tr->target(eddddge)<<") "
+#define print_e(eddddge) eddddge<<" ( "<<mesh_input->origin(eddddge)<<" - "<<mesh_input->target(eddddge)<<") "
 
 struct Polygon{
     int seed_edge; //Edge that generate the polygon
@@ -32,7 +32,7 @@ private:
     typedef std::vector<char> bit_vector; 
 
 
-    Triangulation *tr; // Halfedge triangulation
+    Triangulation *mesh_input; // Halfedge triangulation
     Triangulation *mesh_output;
     std::vector<int> output_seeds; //Seeds of the polygon
 
@@ -47,6 +47,7 @@ private:
     int m_polygons = 0; //Number of polygons
     int n_frontier_edges = 0; //Number of frontier edges
     int n_barrier_edge_tips = 0; //Number of barrier edge tips
+    
 public:
 
     Polylla() {}; //Default constructor
@@ -55,13 +56,13 @@ public:
     Polylla(std::string off_file){
         //std::cout<<"Generating Triangulization..."<<std::endl;
         auto t_start = std::chrono::high_resolution_clock::now();
-        this->tr = new Triangulation(off_file);
+        this->mesh_input = new Triangulation(off_file);
         auto t_end = std::chrono::high_resolution_clock::now();
         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Triangulation generated "<<elapsed_time_ms<<" ms"<<std::endl;
 
         //call copy constructor
-        mesh_output = new Triangulation(*tr);
+        mesh_output = new Triangulation(*mesh_input);
         construct_Polylla();
     }
 
@@ -69,32 +70,31 @@ public:
     Polylla(std::string node_file, std::string ele_file, std::string neigh_file){
         //std::cout<<"Generating Triangulization..."<<std::endl;
         auto t_start = std::chrono::high_resolution_clock::now();
-        this->tr = new Triangulation(node_file, ele_file, neigh_file);
+        this->mesh_input = new Triangulation(node_file, ele_file, neigh_file);
         auto t_end = std::chrono::high_resolution_clock::now();
         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Triangulation generated "<<elapsed_time_ms<<" ms"<<std::endl;
 
         //call copy constructor
-        mesh_output = new Triangulation(*tr);
+        mesh_output = new Triangulation(*mesh_input);
         construct_Polylla();
     }
 
     ~Polylla() {
-        delete tr;
+        delete mesh_input;
+        delete mesh_output;
     }
 
     void construct_Polylla(){
 
-        
-
-        max_edges = bit_vector(tr->halfEdges(), false);
-        frontier_edges = bit_vector(tr->halfEdges(), false);
-        terminal_edges = bit_vector(tr->halfEdges(), false);
-        //seed_edges = bit_vector(tr->halfEdges(), false);
-        triangles = tr->get_Triangles(); //Change by triangle list
+        max_edges = bit_vector(mesh_input->halfEdges(), false);
+        frontier_edges = bit_vector(mesh_input->halfEdges(), false);
+        terminal_edges = bit_vector(mesh_input->halfEdges(), false);
+        //seed_edges = bit_vector(mesh_input->halfEdges(), false);
+        triangles = mesh_input->get_Triangles(); //Change by triangle list
 
         //Label max edges of each triangle
-        //for (size_t t = 0; t < tr->faces(); t++){
+        //for (size_t t = 0; t < mesh_input->faces(); t++){
         auto t_start = std::chrono::high_resolution_clock::now();
         for(auto &t : triangles)
             max_edges[label_max_edge(t)] = true;   
@@ -104,7 +104,7 @@ public:
 
         t_start = std::chrono::high_resolution_clock::now();
         //Label frontier edges
-        for (std::size_t e = 0; e < tr->halfEdges(); e++){
+        for (std::size_t e = 0; e < mesh_input->halfEdges(); e++){
             if(is_frontier_edge(e)){
                 frontier_edges[e] = true;
                 n_frontier_edges++;
@@ -116,8 +116,8 @@ public:
         
         t_start = std::chrono::high_resolution_clock::now();
         //label seeds edges,
-        for (std::size_t e = 0; e < tr->halfEdges(); e++)
-            if(tr->is_interior_face(e) && is_seed_edge(e))
+        for (std::size_t e = 0; e < mesh_input->halfEdges(); e++)
+            if(mesh_input->is_interior_face(e) && is_seed_edge(e))
                 seed_edges.push_back(e);
         t_end = std::chrono::high_resolution_clock::now();
         elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
@@ -131,16 +131,10 @@ public:
         for(auto &e : seed_edges){
             polygon_seed = travel_triangles(e);
 
-            //output_seeds.push_back(polygon_seed);
-            //if(has_BarrierEdgeTip(polygon_seed))
-            //    std::cout<<"Polygon "<<e<<" has barrier edge tip"<<std::endl;
-
             if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
                 output_seeds.push_back(polygon_seed);
             }else{ //Else, the polygon is send to reparation phase
                 barrieredge_tip_reparation(polygon_seed);
-                //output_seeds.push_back(polygon_seed);
-                
             }         
         }    
         t_end = std::chrono::high_resolution_clock::now();
@@ -150,7 +144,7 @@ public:
         this->m_polygons = output_seeds.size();
 
         std::cout<<"Mesh with "<<m_polygons<<" polygons "<<n_frontier_edges/2<<" edges and "<<n_barrier_edge_tips<<" barrier-edge tips."<<std::endl;
-        //tr->print_pg(std::to_string(tr->vertices()) + ".pg");             
+        //mesh_input->print_pg(std::to_string(mesh_input->vertices()) + ".pg");             
     }
 
     //function whose input is a vector and print the elements of the vector
@@ -168,10 +162,10 @@ public:
         _polygon poly;
         out<<"# domain type\nCustom\n";
         out<<"# nodal coordinates: number of nodes followed by the coordinates \n";
-        out<<tr->vertices()<<std::endl;
+        out<<mesh_input->vertices()<<std::endl;
         //print nodes
-        for(std::size_t v = 0; v < tr->vertices(); v++)
-            out<<std::setprecision(15)<<tr->get_PointX(v)<<" "<<tr->get_PointY(v)<<std::endl; 
+        for(std::size_t v = 0; v < mesh_input->vertices(); v++)
+            out<<std::setprecision(15)<<mesh_input->get_PointX(v)<<" "<<mesh_input->get_PointY(v)<<std::endl; 
         out<<"# element connectivity: number of elements followed by the elements\n";
         out<<this->m_polygons<<std::endl;
         //print polygons
@@ -186,37 +180,37 @@ public:
         out<<"# indices of nodes located on the Dirichlet boundary\n";
         ///Find borderedges
         int b_curr, b_init = 0;
-        for(std::size_t i = tr->halfEdges()-1; i != 0; i--){
-            if(tr->is_border_face(i)){
+        for(std::size_t i = mesh_input->halfEdges()-1; i != 0; i--){
+            if(mesh_input->is_border_face(i)){
                 b_init = i;
                 break;
             }
         }
-        out<<tr->origin(b_init) + 1<<" ";
-        b_curr = tr->prev(b_init);
+        out<<mesh_input->origin(b_init) + 1<<" ";
+        b_curr = mesh_input->prev(b_init);
         while(b_init != b_curr){
-            out<<tr->origin(b_curr) + 1<<" ";
-            b_curr = tr->prev(b_curr);
+            out<<mesh_input->origin(b_curr) + 1<<" ";
+            b_curr = mesh_input->prev(b_curr);
         }
         out<<std::endl;
         out<<"# indices of nodes located on the Neumann boundary\n0\n";
         out<<"# xmin, xmax, ymin, ymax of the bounding box\n";
-        double xmax = tr->get_PointX(0);
-        double xmin = tr->get_PointX(0);
-        double ymax = tr->get_PointY(0);
-        double ymin = tr->get_PointY(0);
+        double xmax = mesh_input->get_PointX(0);
+        double xmin = mesh_input->get_PointX(0);
+        double ymax = mesh_input->get_PointY(0);
+        double ymin = mesh_input->get_PointY(0);
         //Search min and max coordinates
-        for(std::size_t v = 0; v < tr->vertices(); v++){
+        for(std::size_t v = 0; v < mesh_input->vertices(); v++){
             //search range x
-            if(tr->get_PointX(v) > xmax )
-                xmax = tr->get_PointX(v);
-            if(tr->get_PointX(v) < xmin )
-                xmin = tr->get_PointX(v);
+            if(mesh_input->get_PointX(v) > xmax )
+                xmax = mesh_input->get_PointX(v);
+            if(mesh_input->get_PointX(v) < xmin )
+                xmin = mesh_input->get_PointX(v);
             //search range y
-            if(tr->get_PointY(v) > ymax )
-                ymax = tr->get_PointY(v);
-            if(tr->get_PointY(v) < ymin )
-                ymin = tr->get_PointY(v);
+            if(mesh_input->get_PointY(v) > ymax )
+                ymax = mesh_input->get_PointY(v);
+            if(mesh_input->get_PointY(v) < ymin )
+                ymin = mesh_input->get_PointY(v);
         }
         out<<xmin<<" "<<xmax<<" "<<ymin<<" "<<ymax<<std::endl;
         out.close();
@@ -229,10 +223,10 @@ public:
         out<<"{ appearance  {+edge +face linewidth 2} LIST\n";
         out<<"OFF"<<std::endl;
         //num_vertices num_polygons 0
-        out<<std::setprecision(15)<<tr->vertices()<<" "<<m_polygons<<" 0"<<std::endl;
+        out<<std::setprecision(15)<<mesh_input->vertices()<<" "<<m_polygons<<" 0"<<std::endl;
         //print nodes
-        for(std::size_t v = 0; v < tr->vertices(); v++)
-            out<<tr->get_PointX(v)<<" "<<tr->get_PointY(v)<<" 0"<<std::endl; 
+        for(std::size_t v = 0; v < mesh_input->vertices(); v++)
+            out<<mesh_input->get_PointX(v)<<" "<<mesh_input->get_PointY(v)<<" 0"<<std::endl; 
         //print polygons
         int size_poly;
         int e_curr;
@@ -272,9 +266,9 @@ public:
             }
         }
         file<<n_frontier_edges<<std::endl;
-        for(std::size_t i = 0; i < tr->halfEdges(); i++){
+        for(std::size_t i = 0; i < mesh_input->halfEdges(); i++){
             if(frontier_edges[i] == true){
-                file<<tr->origin(i)<<" "<<tr->target(i)<<"\n";
+                file<<mesh_input->origin(i)<<" "<<mesh_input->target(i)<<"\n";
             }
         }
         file.close();
@@ -286,16 +280,16 @@ public:
         _polygon poly;
         //search next frontier-edge
         int e_init = search_frontier_edge(e);
-        int v_init = tr->origin(e_init);
-        int e_curr = tr->next(e_init);
-        int v_curr = tr->origin(e_curr);
+        int v_init = mesh_input->origin(e_init);
+        int e_curr = mesh_input->next(e_init);
+        int v_curr = mesh_input->origin(e_curr);
         poly.push_back(v_curr);
         while(e_curr != e_init && v_curr != v_init)
         {   
             e_curr = search_frontier_edge(e_curr);  
             //select triangle that contains v_curr as origin
-            e_curr = tr->next(e_curr);
-            v_curr = tr->origin(e_curr);
+            e_curr = mesh_input->next(e_curr);
+            v_curr = mesh_input->origin(e_curr);
             poly.push_back(v_curr);
         }
         return poly;
@@ -307,10 +301,10 @@ private:
     //Return true is the edge is terminal-edge or terminal border edge, 
     //but it only selects one halfedge as terminal-edge, the halfedge with lowest index is selected
     bool is_seed_edge(int e){
-        int twin = tr->twin(e);
+        int twin = mesh_input->twin(e);
 
-        bool is_terminal_edge = (tr->is_interior_face(twin) &&  (max_edges[e] && max_edges[twin]) );
-        bool is_terminal_border_edge = (tr->is_border_face(twin) && max_edges[e]);
+        bool is_terminal_edge = (mesh_input->is_interior_face(twin) &&  (max_edges[e] && max_edges[twin]) );
+        bool is_terminal_border_edge = (mesh_input->is_border_face(twin) && max_edges[e]);
 
         if( (is_terminal_edge && e < twin ) || is_terminal_border_edge){
             return true;
@@ -329,9 +323,9 @@ private:
     {
         //Calculates the size of each edge of a triangle 
 
-        double dist0 = tr->distance(e);
-        double dist1 = tr->distance(tr->next(e));
-        double dist2 = tr->distance(tr->next(tr->next(e)));
+        double dist0 = mesh_input->distance(e);
+        double dist1 = mesh_input->distance(mesh_input->next(e));
+        double dist2 = mesh_input->distance(mesh_input->next(mesh_input->next(e)));
 
         short max;
         //Find the longest edge of the triangle
@@ -345,18 +339,18 @@ private:
             std::cout<<"ERROR: max edge not found"<<std::endl;
             exit(0);
         }
-        int init_vertex = tr->origin(e);
+        int init_vertex = mesh_input->origin(e);
         int curr_vertex = -1;
         int nxt = e;
         // Return the index of the edge with the longest edge
         while (curr_vertex != init_vertex){
-            nxt = tr->next(nxt);
-            curr_vertex = tr->origin(nxt);
-            if(max == 0 && curr_vertex == tr->origin(e)){
+            nxt = mesh_input->next(nxt);
+            curr_vertex = mesh_input->origin(nxt);
+            if(max == 0 && curr_vertex == mesh_input->origin(e)){
                 return nxt;
-            }else if(max == 1 && curr_vertex == tr->origin(tr->next(e))){
+            }else if(max == 1 && curr_vertex == mesh_input->origin(mesh_input->next(e))){
                 return nxt;
-            }else if(max == 2 && curr_vertex == tr->origin(tr->next(tr->next(e)))){
+            }else if(max == 2 && curr_vertex == mesh_input->origin(mesh_input->next(mesh_input->next(e)))){
                 return nxt;
             }          
         }
@@ -368,8 +362,8 @@ private:
     //in case of border edges, they are always labeled as frontier-edge
     bool is_frontier_edge(const int e)
     {
-        int twin = tr->twin(e);
-        bool is_border_edge = tr->is_border_face(e) || tr->is_border_face(twin);
+        int twin = mesh_input->twin(e);
+        bool is_border_edge = mesh_input->is_border_face(e) || mesh_input->is_border_face(twin);
         bool is_not_max_edge = !(max_edges[e] || max_edges[twin]);
         if(is_border_edge || is_not_max_edge)
             return true;
@@ -383,7 +377,7 @@ private:
         int nxt = e;
         while(!frontier_edges[nxt])
         {
-            nxt = tr->CW_edge_to_vertex(nxt);
+            nxt = mesh_input->CW_edge_to_vertex(nxt);
         }  
         return nxt;
     }
@@ -416,10 +410,10 @@ private:
         int e_init = search_frontier_edge(e);
         //first frontier-edge is store to calculate the prev of next frontier-edfge
         int e_prev = e_init; 
-        int v_init = tr->origin(e_init);
+        int v_init = mesh_input->origin(e_init);
 
-        int e_curr = tr->next(e_init);
-        int v_curr = tr->origin(e_curr);
+        int e_curr = mesh_input->next(e_init);
+        int v_curr = mesh_input->origin(e_curr);
         
         //travel inside frontier-edges of polygon
         while(e_curr != e_init && v_curr != v_init)
@@ -433,8 +427,8 @@ private:
 
             //travel to next half-edge
             e_prev = e_curr;
-            e_curr = tr->next(e_curr);
-            v_curr = tr->origin(e_curr);
+            e_curr = mesh_input->next(e_curr);
+            v_curr = mesh_input->origin(e_curr);
         }
         mesh_output->set_next(e_prev, e_init);
         mesh_output->set_prev(e_init, e_prev);
@@ -449,13 +443,13 @@ private:
     {
         
         //select frontier-edge of barrier-edge tip
-        int frontieredge_with_bet = tr->twin(e_curr);
-        int nxt = tr->CW_edge_to_vertex(frontieredge_with_bet);
+        int frontieredge_with_bet = mesh_input->twin(e_curr);
+        int nxt = mesh_input->CW_edge_to_vertex(frontieredge_with_bet);
         int adv = 1; 
         //calculates the degree of v_bet
         while (nxt != frontieredge_with_bet)
         {
-            nxt = tr->CW_edge_to_vertex(nxt);
+            nxt = mesh_input->CW_edge_to_vertex(nxt);
             adv++;
         }
         adv--; //last edge visited is the same with the frontier-edge so it is not counted
@@ -467,11 +461,11 @@ private:
             adv = adv/2;
         }   
         //back to traversing the edges of v_bet until select the middle-edge
-        nxt = tr->CW_edge_to_vertex(frontieredge_with_bet);
+        nxt = mesh_input->CW_edge_to_vertex(frontieredge_with_bet);
         //adv--;
         while (adv != 0)
         {
-            nxt = tr->CW_edge_to_vertex(nxt);
+            nxt = mesh_input->CW_edge_to_vertex(nxt);
             adv--;
         }
         return nxt;
@@ -487,7 +481,7 @@ private:
         int middle_edge, v_bet;
 
         std::vector<int> triangle_list;
-        bit_vector seed_bet_mark(this->tr->halfEdges(), false);
+        bit_vector seed_bet_mark(this->mesh_input->halfEdges(), false);
 
         int e_init = e;
         int e_curr = mesh_output->next(e_init);
@@ -554,16 +548,16 @@ private:
         //search next frontier-edge
         while(!frontier_edges[e_init])
         {
-            e_init = tr->CW_edge_to_vertex(e_init);
+            e_init = mesh_input->CW_edge_to_vertex(e_init);
             seed_list[e_init] = false; 
-            //seed_list[tr->twin(e_init)] = false;
+            //seed_list[mesh_input->twin(e_init)] = false;
         }        
         //first frontier-edge is store to calculate the prev of next frontier-edfge
         int e_prev = e_init; 
-        int v_init = tr->origin(e_init);
+        int v_init = mesh_input->origin(e_init);
 
-        int e_curr = tr->next(e_init);
-        int v_curr = tr->origin(e_curr);
+        int e_curr = mesh_input->next(e_init);
+        int v_curr = mesh_input->origin(e_curr);
         seed_list[e_curr] = false;
 
         //travel inside frontier-edges of polygon
@@ -571,9 +565,9 @@ private:
         {   
             while(!frontier_edges[e_curr])
             {
-                e_curr = tr->CW_edge_to_vertex(e_curr);
+                e_curr = mesh_input->CW_edge_to_vertex(e_curr);
                 seed_list[e_curr] = false;
-          //      seed_list[tr->twin(e_curr)] = false;
+          //      seed_list[mesh_input->twin(e_curr)] = false;
             } 
 
             //update next of previous frontier-edge
@@ -583,10 +577,10 @@ private:
 
             //travel to next half-edge
             e_prev = e_curr;        
-            e_curr = tr->next(e_curr);
-            v_curr = tr->origin(e_curr);
+            e_curr = mesh_input->next(e_curr);
+            v_curr = mesh_input->origin(e_curr);
             seed_list[e_curr] = false;
-            //seed_list[tr->twin(e_curr)] = false;
+            //seed_list[mesh_input->twin(e_curr)] = false;
         }
         mesh_output->set_next(e_prev, e_init);
         mesh_output->set_prev(e_init, e_prev);

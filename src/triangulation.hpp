@@ -596,7 +596,7 @@ public:
     //Output: the prev clockwise edge of v
     int CW_edge_to_vertex(int e)
     {
-        int twn, prv, nxt;
+        int twn, nxt;
         twn = HalfEdges.at(e).twin;
         nxt = HalfEdges.at(twn).next;
         return nxt;
