@@ -308,10 +308,8 @@ private:
         //with the origin and target inverted and add at the of HalfEdges vector
         std::cout<<"Size vector: "<<HalfEdges.size()<<std::endl;
         halfEdge he_aux;
-        int borders = 0;
         for(std::size_t i = 0; i < this->n_halfedges; i++){
             if(HalfEdges.at(i).is_border){
-                borders++;
                 he_aux.target = HalfEdges.at(i).origin;
                 he_aux.origin = HalfEdges.at(i).target;
                 he_aux.is_border = true;
@@ -321,9 +319,6 @@ private:
                 HalfEdges.at(i).twin = HalfEdges.size() - 1 ;
             }    
         }
-        
-        std::cout<<"Number of borders: "<<borders<<" and "<<n_border_edges<<std::endl;
-        std::cout<<"Size vector: "<<HalfEdges.size()<<std::endl;
         //traverse the exterior edges and search their next prev halfedge
         int nxtCCW, prvCCW;
         for(std::size_t i = n_halfedges; i < HalfEdges.size(); i++){
