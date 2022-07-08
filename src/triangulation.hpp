@@ -75,6 +75,7 @@ private:
     int n_halfedges = 0; //number of halfedges
     int n_faces = 0; //number of faces
     int n_vertices = 0; //number of vertices
+    int n_border_edges = 0; //number of border edges
     std::vector<vertex> Vertices;
     std::vector<halfEdge> HalfEdges; //list of edges
     //std::vector<char> triangle_flags; //list of edges that generate a unique triangles, 
@@ -155,11 +156,29 @@ private:
             std::getline(neighfile, line); //skip the first line
             while (std::getline(neighfile, line))
             {
+                if(line[0] == '#'){
+                    std::cout<<line<<std::endl;
+                    continue;
+                }
                 std::istringstream(line) >> a1 >> a2 >> a3 >> a4;
+                
                 neighs.push_back(a2);
                 neighs.push_back(a3);
                 neighs.push_back(a4);
-                
+
+                // count all number minior than 0 as border edges
+                if(a2 < 0){
+                    n_border_edges++;
+                    //std::cout<<"Border edge 0 "<<a1<<" "<<a2<<" "<<a3<<" "<<a4<<std::endl;
+                }
+                if(a3 < 0){
+                    n_border_edges++;
+                    //std::cout<<"Border edge 1 "<<a1<<" "<<a2<<" "<<a3<<" "<<a4<<std::endl;
+                }
+                if(a4 < 0){
+                    n_border_edges++;
+                    //std::cout<<"Border edge 2 "<<a1<<" "<<a2<<" "<<a3<<" "<<a4<<std::endl;
+                }
             }
         }
         else 
@@ -171,6 +190,35 @@ private:
     //Generate interior halfedges using faces and neigh vectors
     //also associate each vertex with an incident halfedge
     void construct_interior_halfEdges_from_faces_and_neighs(std::vector<int> faces, std::vector<int> neighs){
+        int neigh, origin, target;
+        for(std::size_t i = 0; i < n_faces; i++){
+            for(std::size_t j = 0; j < 3; j++){
+                halfEdge he;
+                neigh = neighs.at(3*i + ((j+2)%3));
+                origin = faces[3*i+j];
+                target = faces[3*i+((j+1)%3)];
+
+                he.origin = origin;
+                he.target = target;
+                he.next = 3*i + ((j+1)%3);
+                he.prev = 3*i + ((j+2)%3);
+                he.face = i;
+                he.is_border = (neigh == -1);
+                if(neigh != -1){
+                    for (std::size_t j = 0; j < 3; j++){
+                        if(faces.at(3*neigh + j) == target && faces.at(3*neigh + (j + 1)%3) == origin){
+                            he.twin = 3*neigh + j;
+                            break;
+                        }
+                    }
+                }else
+                    he.twin = -1;
+
+                HalfEdges.push_back(he);
+                Vertices[he.origin].incident_halfedge = i*3 + j;
+            }
+        }
+        /*
         for(std::size_t i = 0; i < n_faces; i++){
             halfEdge he0, he1, he2;
             int index_he0 = i*3+0;
@@ -246,7 +294,7 @@ private:
             
             HalfEdges.push_back(he2);
         }
-
+        */
         this->n_halfedges = HalfEdges.size();
     }
 
@@ -255,11 +303,15 @@ private:
     //this takes O(n + k*k), with n the number of interior halfedges and k the number of exterior halfedges
     //optimize to a version n + k
     void construct_exterior_halfEdges(){
+
         //search interior edges labed as border, generates exterior edges
         //with the origin and target inverted and add at the of HalfEdges vector
+        std::cout<<"Size vector: "<<HalfEdges.size()<<std::endl;
         halfEdge he_aux;
-        for(std::size_t i = 0; i < this->n_halfedges; i++)
+        int borders = 0;
+        for(std::size_t i = 0; i < this->n_halfedges; i++){
             if(HalfEdges.at(i).is_border){
+                borders++;
                 he_aux.target = HalfEdges.at(i).origin;
                 he_aux.origin = HalfEdges.at(i).target;
                 he_aux.is_border = true;
@@ -268,24 +320,25 @@ private:
                 HalfEdges.push_back(he_aux);
                 HalfEdges.at(i).twin = HalfEdges.size() - 1 ;
             }    
-               
+        }
         
+        std::cout<<"Number of borders: "<<borders<<" and "<<n_border_edges<<std::endl;
+        std::cout<<"Size vector: "<<HalfEdges.size()<<std::endl;
         //traverse the exterior edges and search their next prev halfedge
-        int v_origin, v_target;
+        int nxtCCW, prvCCW;
         for(std::size_t i = n_halfedges; i < HalfEdges.size(); i++){
             if(HalfEdges.at(i).is_border){
                 //search prev of the halfedge
-                for(std::size_t j = n_halfedges; j < HalfEdges.size(); j++)
-                    if(HalfEdges.at(j).origin == HalfEdges.at(i).target){
-                        HalfEdges.at(j).prev = i;
-                        break;
-                    }
-                //search next of each exterior edge   
-                for(std::size_t j = n_halfedges; j < HalfEdges.size(); j++)
-                    if(HalfEdges.at(i).target == HalfEdges.at(j).origin){
-                            HalfEdges.at(i).next = j;
-                            break;
-                    }
+                prvCCW = this->twin(i);
+                while (HalfEdges.at(prvCCW).is_border != true)
+                    prvCCW = this->CCW_edge_to_vertex(prvCCW);
+                HalfEdges.at(i).prev = prvCCW;
+                
+                //search next of the halfedge
+                nxtCCW = this->CCW_edge_to_vertex(i);
+                while (HalfEdges.at(nxtCCW).is_border != true)
+                    nxtCCW = this->CCW_edge_to_vertex(nxtCCW);
+                HalfEdges.at(i).next = nxtCCW;
             }
         }
 
@@ -463,6 +516,7 @@ public:
         faces = read_triangles_from_file(ele_file);
         std::cout<<"Reading neigh file"<<std::endl;
         neighs = read_neigh_from_file(neigh_file);
+        HalfEdges.reserve(3*n_vertices - 3 - n_border_edges);
         //std::cout<<"Constructing interior halfedges"<<std::endl;
         construct_interior_halfEdges_from_faces_and_neighs(faces, neighs);
         //std::cout<<"Constructing exterior halfedges"<<std::endl;
@@ -580,14 +634,17 @@ public:
     int CCW_edge_to_vertex(int e)
     {
         int twn, nxt;
-        if(is_border_face(e)){
-            nxt = HalfEdges.at(e).prev;
-            twn = HalfEdges.at(nxt).twin;
-            return twn;
-        }
-        nxt = HalfEdges.at(e).next;
-        nxt = HalfEdges.at(nxt).next;
+        nxt = HalfEdges.at(e).prev;
         twn = HalfEdges.at(nxt).twin;
+        return twn;
+        //if(is_border_face(e)){
+        //    nxt = HalfEdges.at(e).prev;
+        //    twn = HalfEdges.at(nxt).twin;
+        //    return twn;
+        //}
+        //nxt = HalfEdges.at(e).next;
+        //nxt = HalfEdges.at(nxt).next;
+        //twn = HalfEdges.at(nxt).twin;
         return twn;
     }    
 
