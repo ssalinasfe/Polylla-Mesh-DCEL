@@ -298,6 +298,8 @@ private:
         this->n_halfedges = HalfEdges.size();
     }
 
+    
+
     //Generate exterior halfedges
     //Literally calculates the convex hull
     //this takes O(n + k*k), with n the number of interior halfedges and k the number of exterior halfedges
