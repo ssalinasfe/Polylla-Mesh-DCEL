@@ -322,39 +322,16 @@ private:
     int label_max_edge(const int e)
     {
         //Calculates the size of each edge of a triangle 
-
         double dist0 = mesh_input->distance(e);
         double dist1 = mesh_input->distance(mesh_input->next(e));
         double dist2 = mesh_input->distance(mesh_input->next(mesh_input->next(e)));
-
-        short max;
         //Find the longest edge of the triangle
-        if((dist0 >= dist1 && dist1 >= dist2) || (dist0 >= dist2 && dist2 >= dist1)){
-            max = 0; //edge face[0]-face[1] is max
-        }else if( (dist1 >= dist0 && dist0 >= dist2) || (dist1 >= dist2 && dist2 >= dist0)){
-            max = 1; //edge face[1]-face[2] is max
-        }else if( (dist2 >= dist1 && dist1 >= dist0) || (dist2 >= dist0 && dist0 >= dist1)){
-            max = 2; //edge face[2]-face[0] is max
-        }else{
-            std::cout<<"ERROR: max edge not found"<<std::endl;
-            exit(0);
-        }
-        int init_vertex = mesh_input->origin(e);
-        int curr_vertex = -1;
-        int nxt = e;
-        // Return the index of the edge with the longest edge
-        while (curr_vertex != init_vertex){
-            nxt = mesh_input->next(nxt);
-            curr_vertex = mesh_input->origin(nxt);
-            if(max == 0 && curr_vertex == mesh_input->origin(e)){
-                return nxt;
-            }else if(max == 1 && curr_vertex == mesh_input->origin(mesh_input->next(e))){
-                return nxt;
-            }else if(max == 2 && curr_vertex == mesh_input->origin(mesh_input->next(mesh_input->next(e)))){
-                return nxt;
-            }          
-        }
-        return -1;
+        if(std::max({dist0, dist1, dist2}) == dist0)
+            return e;
+        else if(std::max({dist0, dist1, dist2}) == dist1)
+            return mesh_input->next(e);
+        else
+            return mesh_input->next(mesh_input->next(e));
     }
 
  

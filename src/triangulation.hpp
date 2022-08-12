@@ -580,7 +580,7 @@ public:
         double y1 = Vertices.at(origin(e)).y;
         double x2 = Vertices.at(target(e)).x;
         double y2 = Vertices.at(target(e)).y;
-        return sqrt(pow(x1-x2,2) + pow(y1-y2,2));
+        return pow(x1-x2,2) + pow(y1-y2,2);
     }
 
 
