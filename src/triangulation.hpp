@@ -218,83 +218,6 @@ private:
                 Vertices[he.origin].incident_halfedge = i*3 + j;
             }
         }
-        /*
-        for(std::size_t i = 0; i < n_faces; i++){
-            halfEdge he0, he1, he2;
-            int index_he0 = i*3+0;
-            int index_he1 = i*3+1;
-            int index_he2 = i*3+2;
-            int v0 = faces.at(3*i+0);
-            int v1 = faces.at(3*i+1);
-            int v2 = faces.at(3*i+2);
-            int n0 = neighs.at(3*i+0);
-            int n1 = neighs.at(3*i+1);
-            int n2 = neighs.at(3*i+2);
-            
-            he0.origin = v0;
-            he0.target = v1;
-            he0.next = index_he1;
-            he0.prev = index_he2;
-            he0.face = i;
-            he0.is_border = (n2 == -1);
-            Vertices.at(v0).incident_halfedge = index_he0;
-            if(n2 != -1){
-                for (std::size_t j = 0; j < 3; j++)
-                {
-                    if(faces.at(3*n2 + j) == v1 && faces.at(3*n2 + (j + 1)%3) == v0){
-                        he0.twin = 3*n2 + j;
-                        break;
-                    }
-                }
-            }else
-                he0.twin = -1;
-
-            HalfEdges.push_back(he0);
-            
-            he1.origin = v1;
-            he1.target = v2;
-            he1.next = index_he2;
-            he1.prev = index_he0;
-            he1.face = i;
-            he1.is_border = (n0 == -1);
-            
-            Vertices.at(v1).incident_halfedge = index_he1;
-            
-
-            if(n0 != -1){
-                for (std::size_t j = 0; j < 3; j++)
-                {
-                    if(faces.at(3*n0 + j) == v2 && faces.at(3*n0 + (j + 1)%3) == v1){
-                        he1.twin = 3*n0 + j;
-                        break;
-                    }
-                }
-            }else
-                he1.twin = -1;
-            HalfEdges.push_back(he1);
-
-            he2.origin = v2;
-            he2.target = v0;
-            he2.next = index_he0;
-            he2.prev = index_he1;
-            he2.face = i;
-            he2.is_border = (n1 == -1);
-            Vertices.at(v2).incident_halfedge = index_he2;
-
-            if(n1 != -1)
-                for (std::size_t j = 0; j < 3; j++)
-                {
-                    if(faces.at(3*n1 + j) == v0 && faces.at(3*n1 + (j + 1)%3) == v2){
-                        he2.twin = 3*n1 + j;
-                        break;
-                    }
-                }
-            else
-                he2.twin = -1;
-            
-            HalfEdges.push_back(he2);
-        }
-        */
         this->n_halfedges = HalfEdges.size();
     }
 
@@ -308,7 +231,7 @@ private:
 
         //search interior edges labed as border, generates exterior edges
         //with the origin and target inverted and add at the of HalfEdges vector
-        std::cout<<"Size vector: "<<HalfEdges.size()<<std::endl;
+        //std::cout<<"Size vector: "<<HalfEdges.size()<<std::endl;
         halfEdge he_aux;
         for(std::size_t i = 0; i < this->n_halfedges; i++){
             if(HalfEdges.at(i).is_border){
@@ -338,7 +261,6 @@ private:
                 HalfEdges.at(i).next = nxtCCW;
             }
         }
-
         this->n_halfedges = HalfEdges.size();
     }
 
@@ -634,15 +556,6 @@ public:
         nxt = HalfEdges.at(e).prev;
         twn = HalfEdges.at(nxt).twin;
         return twn;
-        //if(is_border_face(e)){
-        //    nxt = HalfEdges.at(e).prev;
-        //    twn = HalfEdges.at(nxt).twin;
-        //    return twn;
-        //}
-        //nxt = HalfEdges.at(e).next;
-        //nxt = HalfEdges.at(nxt).next;
-        //twn = HalfEdges.at(nxt).twin;
-        return twn;
     }    
 
     //Given a edge with vertex origin v, return the prev clockwise edge of v with v as origin
@@ -774,6 +687,18 @@ public:
         HalfEdges.at(e).face = f;
     }
 
+    int degree(int v)
+    {
+        int e_curr = edge_of_vertex(v);
+        int e_next = CCW_edge_to_vertex(e_curr);
+        int adv = 1;
+        while (e_next != e_curr)
+        {
+            e_next = CCW_edge_to_vertex(e_next);
+            adv++;
+        }
+        return adv;
+    }
 };
 
 #endif

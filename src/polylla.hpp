@@ -415,31 +415,13 @@ private:
     //Given a barrier-edge tip v, return the middle edge incident to v
     //The function first calculate the degree of v - 1 and then divide it by 2, after travel to until the middle-edge
     //input: vertex v
-    //output: middle edge incident to v
-    int search_middle_edge(const int v_bet, const int e_curr)
-    {
-        
-        //select frontier-edge of barrier-edge tip
-        int frontieredge_with_bet = mesh_input->twin(e_curr);
+    //output: edge incident to v
+    int calculate_middle_edge(const int v){
+        int frontieredge_with_bet = this->search_frontier_edge(mesh_input->edge_of_vertex(v));
+        int internal_edges =mesh_input->degree(v) - 1; //internal-edges incident to v
+        int adv = (internal_edges%2 == 0) ? internal_edges/2 - 1 : internal_edges/2 ;
         int nxt = mesh_input->CW_edge_to_vertex(frontieredge_with_bet);
-        int adv = 1; 
-        //calculates the degree of v_bet
-        while (nxt != frontieredge_with_bet)
-        {
-            nxt = mesh_input->CW_edge_to_vertex(nxt);
-            adv++;
-        }
-        adv--; //last edge visited is the same with the frontier-edge so it is not counted
-        if(adv%2 == 0){ //if the triangles surrounding the BET are even 
-            adv = adv/2 - 1;
-        }else{   
-            //if the triangles surrounding the BET are odd, edges are even
-            //Choose any edge of the triangle in the middle; prov is choose due to this always exists
-            adv = adv/2;
-        }   
         //back to traversing the edges of v_bet until select the middle-edge
-        nxt = mesh_input->CW_edge_to_vertex(frontieredge_with_bet);
-        //adv--;
         while (adv != 0)
         {
             nxt = mesh_input->CW_edge_to_vertex(nxt);
@@ -474,7 +456,7 @@ private:
 
                 //select edge with bet
                 v_bet = mesh_output->target(e_curr);
-                middle_edge = search_middle_edge(v_bet, e_curr);
+                middle_edge = calculate_middle_edge(v_bet);
 
                 //middle edge that contains v_bet
                 t1 = middle_edge;
