@@ -222,19 +222,17 @@ private:
     }
 
     
-
     //Generate exterior halfedges
-    //Literally calculates the convex hull
-    //this takes O(n + k*k), with n the number of interior halfedges and k the number of exterior halfedges
-    //optimize to a version n + k
+    //This takes  n + k time where n is the number of vertices and k is the number of border edges
     void construct_exterior_halfEdges(){
 
         //search interior edges labed as border, generates exterior edges
         //with the origin and target inverted and add at the of HalfEdges vector
         //std::cout<<"Size vector: "<<HalfEdges.size()<<std::endl;
-        halfEdge he_aux;
         for(std::size_t i = 0; i < this->n_halfedges; i++){
             if(HalfEdges.at(i).is_border){
+                halfEdge he_aux;
+                he_aux.face = -1;
                 he_aux.target = HalfEdges.at(i).origin;
                 he_aux.origin = HalfEdges.at(i).target;
                 he_aux.is_border = true;
@@ -248,17 +246,16 @@ private:
         int nxtCCW, prvCCW;
         for(std::size_t i = n_halfedges; i < HalfEdges.size(); i++){
             if(HalfEdges.at(i).is_border){
-                //search prev of the halfedge
-                prvCCW = this->twin(i);
-                while (HalfEdges.at(prvCCW).is_border != true)
-                    prvCCW = this->CCW_edge_to_vertex(prvCCW);
-                HalfEdges.at(i).prev = prvCCW;
                 
-                //search next of the halfedge
-                nxtCCW = this->CCW_edge_to_vertex(i);
+                nxtCCW = CCW_edge_to_vertex(HalfEdges.at(i).twin);
                 while (HalfEdges.at(nxtCCW).is_border != true)
                     nxtCCW = this->CCW_edge_to_vertex(nxtCCW);
                 HalfEdges.at(i).next = nxtCCW;
+
+                prvCCW = this->next(twin(i));
+                while (HalfEdges.at(HalfEdges.at(prvCCW).twin).is_border != true)
+                    prvCCW = this->CW_edge_to_vertex(prvCCW);
+                HalfEdges.at(i).prev = HalfEdges.at(prvCCW).twin;
             }
         }
         this->n_halfedges = HalfEdges.size();
