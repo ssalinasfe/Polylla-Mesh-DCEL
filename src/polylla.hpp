@@ -45,7 +45,8 @@ private:
     int m_polygons = 0; //Number of polygons
     int n_frontier_edges = 0; //Number of frontier edges
     int n_barrier_edge_tips = 0; //Number of barrier edge tips
-
+    int n_polygons_to_repair = 0;
+    int n_polygons_added_after_repair = 0;
 
     // Times
     double t_label_max_edges = 0;
@@ -188,6 +189,14 @@ public:
         std::ofstream out(filename);
         std::cout<<"Printing JSON file as "<<filename<<std::endl;
         out<<"{"<<std::endl;
+        out<<"\"n_polygons\": "<<m_polygons<<","<<std::endl;
+        out<<"\"n_frontier_edges\": "<<n_frontier_edges/2<<","<<std::endl;
+        out<<"\"n_barrier_edge_tips\": "<<n_barrier_edge_tips<<","<<std::endl;
+        out<<"\"n_half_edges\": "<<mesh_input->halfEdges()<<","<<std::endl;
+        out<<"\"n_faces\": "<<mesh_input->faces()<<","<<std::endl;
+        out<<"\"n_vertices\": "<<mesh_input->vertices()<<std::endl;
+        out<<"\"n_polygons_to_repair\": "<<n_polygons_to_repair<<","<<std::endl;
+        out<<"\"n_polygons_added_after_repair\": "<<n_polygons_added_after_repair<<","<<std::endl;
         out<<"\"time_triangulation_generation\": "<<mesh_input->get_triangulation_generation_time()<<","<<std::endl;
         out<<"\"time_to_label_max_edges\": "<<t_label_max_edges<<","<<std::endl;
         out<<"\"time_to_label_frontier_edges\": "<<t_label_frontier_edges<<","<<std::endl;
@@ -197,12 +206,6 @@ public:
         out<<"\"time_to_traversal\": "<<t_traversal<<","<<std::endl;
         out<<"\"time_to_repair\": "<<t_repair<<","<<std::endl;
         out<<"\"time_to_generate_polygonal_mesh\": "<<t_label_max_edges + t_label_frontier_edges + t_label_seed_edges + t_traversal_and_repair<<","<<std::endl;
-        out<<"\"polygons\": "<<m_polygons<<","<<std::endl;
-        out<<"\"n_frontier_edges\": "<<n_frontier_edges/2<<","<<std::endl;
-        out<<"\"n_barrier_edge_tips\": "<<n_barrier_edge_tips<<","<<std::endl;
-        out<<"\"n_half_edges\": "<<mesh_input->halfEdges()<<","<<std::endl;
-        out<<"\"n_faces\": "<<mesh_input->faces()<<","<<std::endl;
-        out<<"\"n_vertices\": "<<mesh_input->vertices()<<std::endl;
         out<<"\t\"memory_max_edges\": "<<m_max_edges<<","<<std::endl;
         out<<"\t\"memory_frontier_edge\": "<<m_frontier_edge<<","<<std::endl;
         out<<"\t\"memory_seed_edges\": "<<m_seed_edges<<","<<std::endl;
@@ -517,6 +520,7 @@ private:
     //output: polygon without barrier-edge tips
     void barrieredge_tip_reparation(const int e)
     {
+        this->n_polygons_to_repair++;
         int x, y, i;
         int t1, t2;
         int middle_edge, v_bet;
@@ -567,6 +571,7 @@ private:
             t_curr = triangle_list.back();
             triangle_list.pop_back();
             if(seed_bet_mark[t_curr]){
+                this->n_polygons_added_after_repair++;
                 seed_bet_mark[t_curr] = false;
                 new_polygon_seed = generate_repaired_polygon(t_curr, seed_bet_mark);
                 //Store the polygon in the as part of the mesh
