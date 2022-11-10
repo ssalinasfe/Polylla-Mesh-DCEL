@@ -44,6 +44,7 @@ TODO:
 #include <sstream>
 #include <unordered_map>
 #include <map>
+#include <chrono>
 
 struct vertex{
     double x;
@@ -72,15 +73,20 @@ private:
     typedef std::array<int,3> _triangle; 
     typedef std::pair<int,int> _edge;
 
+    //Statically data
     int n_halfedges = 0; //number of halfedges
     int n_faces = 0; //number of faces
     int n_vertices = 0; //number of vertices
     int n_border_edges = 0; //number of border edges
+    double t_triangulation_generation = 0; //time to generate the triangulation
+
+
     std::vector<vertex> Vertices;
     std::vector<halfEdge> HalfEdges; //list of edges
     //std::vector<char> triangle_flags; //list of edges that generate a unique triangles, 
     std::vector<int> triangle_list; //list of edges that generate a unique triangles, 
     
+
 
     //Read node file in .node format and nodes in point vector
     void read_nodes_from_file(std::string name){
@@ -190,7 +196,7 @@ private:
         //Generate interior halfedges using a a vector with the faces of the triangulation
     //if an interior half-edge is border, it is mark as border-edge
     //mark border-edges
-    void construct_interior_halfEdges_from_faces(std::vector<int> faces){
+    void construct_interior_halfEdges_from_faces(std::vector<int> &faces){
         auto hash_for_pair = [](const std::pair<int, int>& p) {
             return std::hash<int>{}(p.first) ^ std::hash<int>{}(p.second);
         };
@@ -266,7 +272,7 @@ private:
 
     //Generate interior halfedges using faces and neigh vectors
     //also associate each vertex with an incident halfedge
-    void construct_interior_halfEdges_from_faces_and_neighs(std::vector<int> faces, std::vector<int> neighs){
+    void construct_interior_halfEdges_from_faces_and_neighs(std::vector<int> &faces, std::vector<int> &neighs){
         int neigh, origin, target;
         for(std::size_t i = 0; i < n_faces; i++){
             for(std::size_t j = 0; j < 3; j++){
@@ -435,27 +441,39 @@ public:
         faces = read_triangles_from_file(ele_file);
         std::cout<<"Reading neigh file"<<std::endl;
         neighs = read_neigh_from_file(neigh_file);
+
+        //calculation of the time to build the data structure
+        auto t_start = std::chrono::high_resolution_clock::now();
         HalfEdges.reserve(3*n_vertices - 3 - n_border_edges);
         //std::cout<<"Constructing interior halfedges"<<std::endl;
         construct_interior_halfEdges_from_faces_and_neighs(faces, neighs);
         //std::cout<<"Constructing exterior halfedges"<<std::endl;
         construct_exterior_halfEdges();
-        //std::cout<<"Constructing triangles"<<std::endl;
 
         triangle_list.reserve(n_faces);
         for(std::size_t i = 0; i < n_faces; i++)
             triangle_list.push_back(3*i);
+
+        //std::cout<<"Constructing triangles"<<std::endl;
+        auto t_end = std::chrono::high_resolution_clock::now();
+        t_triangulation_generation = std::chrono::duration<double, std::milli>(t_end-t_start).count();
     }
 
     Triangulation(std::string OFF_file){
         std::cout<<"Reading OFF file "<<OFF_file<<std::endl;
         std::vector<int> faces = read_OFFfile(OFF_file);
+
+        auto t_start = std::chrono::high_resolution_clock::now();
+
         construct_interior_halfEdges_from_faces(faces);
         construct_exterior_halfEdges();
 
         triangle_list.reserve(n_faces);
         for(std::size_t i = 0; i < n_faces; i++)
             triangle_list.push_back(3*i);
+
+        auto t_end = std::chrono::high_resolution_clock::now();
+        t_triangulation_generation = std::chrono::duration<double, std::milli>(t_end-t_start).count();
     }
 
     // Copy constructor
@@ -465,35 +483,25 @@ public:
         this->n_halfedges = t.n_halfedges;
         this->Vertices = t.Vertices;
         this->HalfEdges = t.HalfEdges;
-        this->triangle_list = t.triangle_list;
+        this-> t_triangulation_generation = t.t_triangulation_generation;
     }
 
-    //print the triangulation in pg file format
-    void print_pg(std::string file_name){
-        std::ofstream file;
-        file.open(file_name);
-        file<< n_vertices <<"\n";
-        file<< n_halfedges <<"\n";
-        for(std::size_t i = 0; i < n_vertices; i++){
-            vertex v = Vertices.at(i);
-            int incident = v.incident_halfedge;
-            int curr = incident;
-            int twin = HalfEdges.at(curr).twin;
-            //search border edges with v as origin
-            if(v.is_border){
-                while(!HalfEdges.at(twin).is_border){
-                    curr = CCW_edge_to_vertex(curr);
-                    twin = HalfEdges.at(curr).twin;
-                }
-            }
-            file<<origin(curr)<<" "<<target(curr)<<"\n";
-            int nxt = CCW_edge_to_vertex(curr);
-            while(nxt != curr){
-                file<<origin(nxt)<<" "<<target(nxt)<<"\n";
-                nxt = CCW_edge_to_vertex(nxt);
-            }
-        }
-        file.close();
+    // destructor
+    ~Triangulation() {
+        Vertices.clear();
+        HalfEdges.clear();
+    }
+
+    double get_triangulation_generation_time() {
+        return t_triangulation_generation;
+    }
+
+    long long get_size_vertex_struct() {
+        return sizeof(decltype(Vertices.back())) * Vertices.capacity();
+    }
+
+    long long get_size_vertex_half_edge() {
+        return sizeof(decltype(HalfEdges.back())) * HalfEdges.capacity();
     }
 
     // Calculates the distante of edge e
@@ -502,7 +510,7 @@ public:
         double y1 = Vertices.at(origin(e)).y;
         double x2 = Vertices.at(target(e)).x;
         double y2 = Vertices.at(target(e)).y;
-        return pow(x1-x2,2) + pow(y1-y2,2);
+        return pow(x1-x2,2) + pow(y1-y2,2); //no sqrt for performance
     }
 
 
@@ -608,8 +616,7 @@ public:
     //Calculates the tail vertex of the edge e
     //Input: e is the edge
     //Output: the tail vertex v of the edge e
-    int origin(int e)
-    {
+    int origin(int e){
         return HalfEdges.at(e).origin;
     }
 
@@ -617,8 +624,7 @@ public:
     //Calculates the head vertex of the edge e
     //Input: e is the edge
     //Output: the head vertex v of the edge e
-    int target(int e)
-    {
+    int target(int e){
         //return HalfEdges.at(e).target;
         return this->origin(HalfEdges.at(e).twin);
     }
@@ -626,8 +632,7 @@ public:
     //Return the twin edge of the edge e
     //Input: e is the edge
     //Output: the twin edge of e
-    int twin(int e)
-    {
+    int twin(int e){
         return HalfEdges.at(e).twin;
     }
 
@@ -699,6 +704,11 @@ public:
             adv++;
         }
         return adv;
+    }
+
+    int incident_halfedge(int f)
+    {
+        return 3*f;
     }
 };
 
