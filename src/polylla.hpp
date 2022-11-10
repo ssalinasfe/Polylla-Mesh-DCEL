@@ -220,7 +220,7 @@ public:
     void print_OFF(std::string filename){
         std::ofstream out(filename);
 
-        out<<"{ appearance  {+edge +face linewidth 2} LIST\n";
+      //  out<<"{ appearance  {+edge +face linewidth 2} LIST\n";
         out<<"OFF"<<std::endl;
         //num_vertices num_polygons 0
         out<<std::setprecision(15)<<mesh_input->vertices()<<" "<<m_polygons<<" 0"<<std::endl;
@@ -247,7 +247,7 @@ public:
             }
             out<<std::endl; 
         }
-        out<<"}"<<std::endl;
+      //  out<<"}"<<std::endl;
         out.close();
     }
 
