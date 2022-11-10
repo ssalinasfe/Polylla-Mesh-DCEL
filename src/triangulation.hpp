@@ -254,7 +254,9 @@ private:
         for(std::size_t i = 0; i < HalfEdges.size(); i++){
             //if halfedge has no twin
             if(HalfEdges.at(i).twin == -1){
-                _edge twin = std::make_pair(this->origin(this->twin(i)),HalfEdges.at(i).origin);
+                int tgt = origin(next(i));
+                int org = origin(i);
+                _edge twin = std::make_pair(tgt, org);
                 it=map_edges.find(twin);
                 //if twin is found
                 if(it!=map_edges.end()){
@@ -263,8 +265,8 @@ private:
                     HalfEdges.at(index_twin).twin = i;
                 }else{ //if twin is not found and halfedge is on the boundary
                     HalfEdges.at(i).is_border = true;
-                    Vertices.at(HalfEdges.at(i).origin).is_border = true;
-                    Vertices.at(this->origin(this->twin(i))).is_border = true;
+                    Vertices.at(org).is_border = true;
+                    Vertices.at(tgt).is_border = true;
                 }
             }
         }
