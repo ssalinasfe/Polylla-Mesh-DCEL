@@ -256,10 +256,10 @@ public:
             }
             out<<size_poly<<" ";            
 
-            out<<mesh_output->origin(e_init) + 1<<" ";
+            out<<mesh_output->origin(e_init)<<" ";
             e_curr = mesh_output->next(e_init);
             while(e_init != e_curr){
-                out<<mesh_output->origin(e_curr) + 1<<" ";
+                out<<mesh_output->origin(e_curr)<<" ";
                 e_curr = mesh_output->next(e_curr);
             }
             out<<std::endl; 
@@ -274,10 +274,10 @@ public:
                 break;
             }
         }
-        out<<mesh_input->origin(b_init) + 1<<" ";
+        out<<mesh_input->origin(b_init)<<" ";
         b_curr = mesh_input->prev(b_init);
         while(b_init != b_curr){
-            out<<mesh_input->origin(b_curr) + 1<<" ";
+            out<<mesh_input->origin(b_curr)<<" ";
             b_curr = mesh_input->prev(b_curr);
         }
         out<<std::endl;

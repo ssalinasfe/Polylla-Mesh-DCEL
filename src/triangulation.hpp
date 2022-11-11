@@ -65,6 +65,17 @@ struct halfEdge {
     int is_border; //1 if the halfedge is on the boundary, 0 otherwise
 };
 
+// Esta fue la unica función ql funciono, porque las weas nativas de c++ funcionan mal
+//https://stackoverflow.com/a/22395635
+// Returns false if the string contains any non-whitespace characters
+// Returns false if the string contains any non-ASCII characters
+bool isWhitespace(std::string s){
+    for(int index = 0; index < s.length(); index++)
+        if(!std::isspace(s[index]))
+            return false;
+    return true;
+}
+
 class Triangulation 
 {
 
@@ -362,8 +373,9 @@ private:
 		{
             //Check first line is a OFF file
 			while (std::getline(offfile, line)){ //add check boundary vertices flag
-				std::istringstream(line) >> tmp;
-				if (tmp[0] != '#' ) //check if first element is a comentary
+                std::istringstream(line) >> tmp;
+                //std::cout<<"tmp: "<<tmp<<std::endl;
+				if (tmp[0] != '#' && !isWhitespace(line))
 				{
 					if(tmp[0] == 'O' && tmp[1] == 'F' && tmp[2] == 'F') //Check if the format is OFF
                         break;
@@ -375,16 +387,17 @@ private:
 			}
 
             //Read the number of vertices and faces
-            
             while (std::getline(offfile, line)){ //add check boundary vertices flag
-				std::istringstream(line) >> tmp;
-				if (tmp[0] != '#' ) //check if first element is a comentary
-				{
-						std::istringstream(line) >> this->n_vertices >> this->n_faces;
-			            this->Vertices.reserve(this->n_vertices);
-                        faces.reserve(3*this->n_faces);
-						break;
-				}
+                std::istringstream(line) >> tmp;
+               // std::cout<<"tmp: "<<tmp<<std::endl;
+				if (tmp[0] != '#' && !isWhitespace(line))
+                { 
+                            std::istringstream(line) >> this->n_vertices >> this->n_faces;
+                            this->Vertices.reserve(this->n_vertices);
+                            faces.reserve(3*this->n_faces);
+                            break;
+                            
+                }
 			}
 
             //Read vertices
@@ -392,7 +405,8 @@ private:
 			while (index < n_vertices && std::getline(offfile, line) )
 			{
 				std::istringstream(line) >> tmp;
-				if (tmp[0] != '#' ) //check if first element is a comentary
+                // std::cout<<"tmp: "<<tmp<<std::endl;
+				if (tmp[0] != '#' && !isWhitespace(line))
 				{
 					std::istringstream(line) >> a1 >> a2 >> a3;
 					vertex ve;
@@ -409,12 +423,14 @@ private:
 			while (index < n_faces && std::getline(offfile, line) )
 			{
 				std::istringstream(line) >> tmp;
-				if (tmp[0] != '#' ) //check if first element is a comentary
+                // std::cout<<"tmp: "<<tmp<<std::endl;
+				if (tmp[0] != '#' && !isWhitespace(line))
 				{
                     std::istringstream(line) >> lenght >> t1 >> t2 >> t3;
                     faces.push_back(t1);
                     faces.push_back(t2);
                     faces.push_back(t3);
+          //          std::cout<<"face "<<index<<": "<<t1<<" "<<t2<<" "<<t3<<std::endl;
                     index++;
 				}
 			}
@@ -423,6 +439,10 @@ private:
 		else 
 				std::cout << "Unable to open node file"; 
 		offfile.close();
+        std::cout<<"pase"<<std::endl;
+        std::cout<<"n_vertices"<<this->n_vertices<<" "<<"n_faces"<<this->n_faces<<std::endl;
+        std::cout<<"vertices: "<<this->Vertices.size()<<" "<<"faces: "<<faces.size()<<std::endl;
+
         return faces;
     }
 
