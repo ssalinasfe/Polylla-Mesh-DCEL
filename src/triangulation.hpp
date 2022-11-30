@@ -304,8 +304,6 @@ private:
             }
         }
         
-        this->n_halfedges = HalfEdges.size();
-
         //Calculate twin halfedge and boundary halfedges from set_edges
         std::unordered_map<_edge,int, decltype(hash_for_pair)>::iterator it;
         for(std::size_t i = 0; i < HalfEdges.size(); i++){
@@ -359,7 +357,6 @@ private:
                 Vertices[he.origin].incident_halfedge = i*3 + j;
             }
         }
-        this->n_halfedges = HalfEdges.size();
     }
 
     
@@ -370,6 +367,7 @@ private:
         //search interior edges labed as border, generates exterior edges
         //with the origin and target inverted and add at the of HalfEdges vector
         //std::cout<<"Size vector: "<<HalfEdges.size()<<std::endl;
+        this->n_halfedges = HalfEdges.size();
         for(std::size_t i = 0; i < this->n_halfedges; i++){
             if(HalfEdges.at(i).is_border){
                 halfEdge he_aux;
@@ -388,7 +386,6 @@ private:
         int nxtCCW, prvCCW;
         for(std::size_t i = n_halfedges; i < HalfEdges.size(); i++){
             if(HalfEdges.at(i).is_border){
-                
                 nxtCCW = CCW_edge_to_vertex(HalfEdges.at(i).twin);
                 while (HalfEdges.at(nxtCCW).is_border != true)
                     nxtCCW = this->CCW_edge_to_vertex(nxtCCW);
@@ -402,8 +399,6 @@ private:
         }
         this->n_halfedges = HalfEdges.size();
     }
-
-
 
 
     //Read the mesh from a file in OFF format
