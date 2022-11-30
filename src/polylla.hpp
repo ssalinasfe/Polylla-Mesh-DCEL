@@ -394,11 +394,7 @@ private:
         bool is_terminal_edge = (mesh_input->is_interior_face(twin) &&  (max_edges[e] && max_edges[twin]) );
         bool is_terminal_border_edge = (mesh_input->is_border_face(twin) && max_edges[e]);
 
-        if( (is_terminal_edge && e < twin ) || is_terminal_border_edge){
-            return true;
-        }
-
-        return false;
+        return (is_terminal_edge && e < twin ) || is_terminal_border_edge;
     }
 
 
@@ -420,6 +416,7 @@ private:
             return mesh_input->next(e);
         else
             return mesh_input->prev(e);
+        return -1;
     }
 
  
@@ -430,10 +427,7 @@ private:
         int twin = mesh_input->twin(e);
         bool is_border_edge = mesh_input->is_border_face(e) || mesh_input->is_border_face(twin);
         bool is_not_max_edge = !(max_edges[e] || max_edges[twin]);
-        if(is_border_edge || is_not_max_edge)
-            return true;
-        else
-            return false;
+        return is_border_edge || is_not_max_edge;
     }
 
     //Travel in CCW order around the edges of vertex v from the edge e looking for the next frontier edge
@@ -441,9 +435,7 @@ private:
     {
         int nxt = e;
         while(!frontier_edges[nxt])
-        {
             nxt = mesh_input->CW_edge_to_vertex(nxt);
-        }  
         return nxt;
     }
 
@@ -454,9 +446,8 @@ private:
         //travel inside frontier-edges of polygon
         while(e_curr != e_init){   
             //if the twin of the next halfedge is the current halfedge, then the polygon is not simple
-            if( mesh_output->twin(mesh_output->next(e_curr)) == e_curr){
+            if( mesh_output->twin(mesh_output->next(e_curr)) == e_curr)
                 return true;
-            }
             //travel to next half-edge
             e_curr = mesh_output->next(e_curr);
         }
@@ -478,8 +469,7 @@ private:
         int v_curr = mesh_input->origin(e_curr);
         
         //travel inside frontier-edges of polygon
-        while(e_curr != e_init && v_curr != v_init)
-        {   
+        while(e_curr != e_init && v_curr != v_init){   
             e_curr = search_frontier_edge(e_curr);
 
             //update next of previous frontier-edge
@@ -507,8 +497,7 @@ private:
         int adv = (internal_edges%2 == 0) ? internal_edges/2 - 1 : internal_edges/2 ;
         int nxt = mesh_input->CW_edge_to_vertex(frontieredge_with_bet);
         //back to traversing the edges of v_bet until select the middle-edge
-        while (adv != 0)
-        {
+        while (adv != 0){
             nxt = mesh_input->CW_edge_to_vertex(nxt);
             adv--;
         }
@@ -528,8 +517,7 @@ private:
         int e_init = e;
         int e_curr = mesh_output->next(e_init);
         //search by barrier-edge tips
-        while(e_curr != e_init)
-        {   
+        while(e_curr != e_init){   
             //if the twin of the next halfedge is the current halfedge, then the polygon is not simple
             if( mesh_output->twin(mesh_output->next(e_curr)) == e_curr){
                 //std::cout<<"e_curr "<<e_curr<<" e_next "<<mesh_output->next(e_curr)<<" next del next "<<mesh_output->next(mesh_output->next(e_curr))<<" twin curr "<<mesh_output->twin(e_curr)<<" twin next "<<mesh_output->twin(mesh_output->next(e_curr))<<std::endl;
@@ -566,8 +554,7 @@ private:
         //two seeds can generate the same polygon
         //so the bit_vector seed_bet_mark is used to label as false the edges that are already used
         int new_polygon_seed;
-        while (!triangle_list.empty())
-        {
+        while (!triangle_list.empty()){
             t_curr = triangle_list.back();
             triangle_list.pop_back();
             if(seed_bet_mark[t_curr]){
@@ -589,8 +576,7 @@ private:
     {   
         int e_init = e;
         //search next frontier-edge
-        while(!frontier_edges[e_init])
-        {
+        while(!frontier_edges[e_init]){
             e_init = mesh_input->CW_edge_to_vertex(e_init);
             seed_list[e_init] = false; 
             //seed_list[mesh_input->twin(e_init)] = false;
@@ -604,8 +590,7 @@ private:
         seed_list[e_curr] = false;
 
         //travel inside frontier-edges of polygon
-        while(e_curr != e_init && v_curr != v_init)
-        {   
+        while(e_curr != e_init && v_curr != v_init){   
             while(!frontier_edges[e_curr])
             {
                 e_curr = mesh_input->CW_edge_to_vertex(e_curr);
