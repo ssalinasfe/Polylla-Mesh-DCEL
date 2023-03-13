@@ -352,7 +352,6 @@ private:
                     }
                 }else
                     he.twin = -1;
-
                 HalfEdges.push_back(he);
                 Vertices[he.origin].incident_halfedge = i*3 + j;
             }
@@ -612,27 +611,27 @@ public:
         return false;
     }
 
-    //Given a edge with vertex origin v, return the next coutnerclockwise edge of v with v as origin
-    //Input: e is the edge
-    //Output: the next counterclockwise edge of v
-    int CCW_edge_to_vertex(int e)
-    {
-        int twn, nxt;
-        nxt = HalfEdges.at(e).prev;
-        twn = HalfEdges.at(nxt).twin;
-        return twn;
-    }    
+//Given a edge with vertex origin v, return the next coutnerclockwise edge of v with v as origin
+//Input: e is the edge
+//Output: the next counterclockwise edge of v
+int CCW_edge_to_vertex(int e)
+{
+    int twn, nxt;
+    nxt = HalfEdges.at(e).prev;
+    twn = HalfEdges.at(nxt).twin;
+    return twn;
+}    
 
-    //Given a edge with vertex origin v, return the prev clockwise edge of v with v as origin
-    //Input: e is the edge
-    //Output: the prev clockwise edge of v
-    int CW_edge_to_vertex(int e)
-    {
-        int twn, nxt;
-        twn = HalfEdges.at(e).twin;
-        nxt = HalfEdges.at(twn).next;
-        return nxt;
-    }    
+//Given a edge with vertex origin v, return the prev clockwise edge of v with v as origin
+//Input: e is the edge
+//Output: the prev clockwise edge of v
+int CW_edge_to_vertex(int e)
+{
+    int twn, nxt;
+    twn = HalfEdges.at(e).twin;
+    nxt = HalfEdges.at(twn).next;
+    return nxt;
+}    
 
     //return number of faces
     int faces(){
@@ -750,23 +749,23 @@ public:
     //    HalfEdges.at(e).face = f;
     //}
 
-    int degree(int v)
+int degree(int v)
+{
+    int e_curr = edge_of_vertex(v);
+    int e_next = CCW_edge_to_vertex(e_curr);
+    int adv = 1;
+    while (e_next != e_curr)
     {
-        int e_curr = edge_of_vertex(v);
-        int e_next = CCW_edge_to_vertex(e_curr);
-        int adv = 1;
-        while (e_next != e_curr)
-        {
-            e_next = CCW_edge_to_vertex(e_next);
-            adv++;
-        }
-        return adv;
+        e_next = CCW_edge_to_vertex(e_next);
+        adv++;
     }
+    return adv;
+}
 
-    int incident_halfedge(int f)
-    {
-        return 3*f;
-    }
+int incident_halfedge(int f)
+{
+    return 3*f;
+}
 };
 
 #endif

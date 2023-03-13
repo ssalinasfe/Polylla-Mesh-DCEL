@@ -1,3 +1,4 @@
+#!/bin/sh
 if [ "$#" -ne 1 ];  then
     echo -e "Usage: $0 <number of vertices>" >&2
     exit

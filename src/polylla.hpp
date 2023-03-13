@@ -105,12 +105,13 @@ public:
         //terminal_edges = bit_vector(mesh_input->halfEdges(), false);
         //seed_edges = bit_vector(mesh_input->halfEdges(), false);
         
-
+        std::cout<<"Creating Polylla..."<<std::endl;
         //Label max edges of each triangle
         //for (size_t t = 0; t < mesh_input->faces(); t++){
         auto t_start = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < mesh_input->faces(); i++)
             max_edges[label_max_edge(mesh_input->incident_halfedge(i))] = true;
+         
         auto t_end = std::chrono::high_resolution_clock::now();
         double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Labered max edges in "<<elapsed_time_ms<<" ms"<<std::endl;
@@ -123,6 +124,7 @@ public:
                 n_frontier_edges++;
             }
         }
+
         t_end = std::chrono::high_resolution_clock::now();
         elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Labeled frontier edges in "<<elapsed_time_ms<<" ms"<<std::endl;
@@ -136,21 +138,21 @@ public:
         elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Labeled seed edges in "<<elapsed_time_ms<<" ms"<<std::endl;
 
-
         //Travel phase: Generate polygon mesh
         int polygon_seed;
         //Foreach seed edge generate polygon
         t_start = std::chrono::high_resolution_clock::now();
         for(auto &e : seed_edges){
             polygon_seed = travel_triangles(e);
-            if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
-                output_seeds.push_back(polygon_seed);
-            }else{ //Else, the polygon is send to reparation phase
-                auto t_start_repair = std::chrono::high_resolution_clock::now();
-                barrieredge_tip_reparation(polygon_seed);
-                auto t_end_repair = std::chrono::high_resolution_clock::now();
-                t_repair += std::chrono::duration<double, std::milli>(t_end_repair-t_start_repair).count();
-            }         
+            output_seeds.push_back(polygon_seed);
+            //if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
+            //    output_seeds.push_back(polygon_seed);
+            //}else{ //Else, the polygon is send to reparation phase
+            //    auto t_start_repair = std::chrono::high_resolution_clock::now();
+            //    barrieredge_tip_reparation(polygon_seed);
+            //    auto t_end_repair = std::chrono::high_resolution_clock::now();
+            //    t_repair += std::chrono::duration<double, std::milli>(t_end_repair-t_start_repair).count();
+            //}         
         }    
         t_end = std::chrono::high_resolution_clock::now();
         t_traversal_and_repair = std::chrono::duration<double, std::milli>(t_end-t_start).count();
@@ -398,6 +400,14 @@ private:
     }
 
 
+    int Equality(double a, double b, double epsilon)
+    {
+    return fabs(a - b) < epsilon;
+    }
+    
+    int GreaterEqualthan(double a, double b, double epsilon){
+            return Equality(a,b,epsilon) || a > b;
+    }
 
 
     //Label max edges of all triangles in the triangulation
@@ -417,8 +427,31 @@ private:
         else
             return mesh_input->prev(e);
         return -1;
+
     }
 
+/*
+    //Label max edges of all triangles in the triangulation
+    //input: edge e indicent to a triangle t
+    //output: position of edge e in max_edges[e] is labeled as true
+    int label_max_edge(const int e)
+    {
+        double epsion = 0.0000000001f;
+
+        //Calculates the size of each edge of a triangle 
+        double dist0 = mesh_input->distance(e);
+        double dist1 = mesh_input->distance(mesh_input->next(e));
+        double dist2 = mesh_input->distance(mesh_input->prev(e));
+        //Find the longest edge of the triangle
+        if( (GreaterEqualthan(dist0,dist1,epsion) && GreaterEqualthan(dist1,dist2,epsion)) || ( GreaterEqualthan(dist0,dist2,epsion) && GreaterEqualthan(dist2,dist1,epsion)))
+            return e;
+        else if((GreaterEqualthan(dist1,dist0,epsion) && GreaterEqualthan(dist0,dist2,epsion)) || ( GreaterEqualthan(dist1,dist2,epsion) && GreaterEqualthan(dist2,dist0,epsion)))
+            return mesh_input->next(e);
+        else
+            return mesh_input->prev(e);
+        return -1;
+
+    }*/
  
     //Return true if the edge e is the lowest edge both triangles incident to e
     //in case of border edges, they are always labeled as frontier-edge
