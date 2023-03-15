@@ -5,13 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <polylla.hpp>
-
 #include <triangulation.hpp>
 
-//#include <compresshalfedge.hpp>
-//#include <io_void.hpp>
-//#include <delfin.hpp>
-//
 
 int main(int argc, char **argv) {
 

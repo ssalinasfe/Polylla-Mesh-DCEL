@@ -13,9 +13,11 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
-#include <triangulation.hpp>
 #include <chrono>
 #include <iomanip>
+
+#include <triangulation.hpp>
+
 
 #define print_e(eddddge) eddddge<<" ( "<<mesh_input->origin(eddddge)<<" - "<<mesh_input->target(eddddge)<<") "
 
@@ -66,8 +68,6 @@ public:
         construct_Polylla();
     }
 
-
-
     //Constructor from a OFF file
     Polylla(std::string off_file){
 
@@ -107,7 +107,6 @@ public:
         
         std::cout<<"Creating Polylla..."<<std::endl;
         //Label max edges of each triangle
-        //for (size_t t = 0; t < mesh_input->faces(); t++){
         auto t_start = std::chrono::high_resolution_clock::now();
         for(int i = 0; i < mesh_input->faces(); i++)
             max_edges[label_max_edge(mesh_input->incident_halfedge(i))] = true;
@@ -134,6 +133,8 @@ public:
         for (std::size_t e = 0; e < mesh_input->halfEdges(); e++)
             if(mesh_input->is_interior_face(e) && is_seed_edge(e))
                 seed_edges.push_back(e);
+
+            
         t_end = std::chrono::high_resolution_clock::now();
         elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Labeled seed edges in "<<elapsed_time_ms<<" ms"<<std::endl;
@@ -144,15 +145,14 @@ public:
         t_start = std::chrono::high_resolution_clock::now();
         for(auto &e : seed_edges){
             polygon_seed = travel_triangles(e);
-            output_seeds.push_back(polygon_seed);
-            //if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
-            //    output_seeds.push_back(polygon_seed);
-            //}else{ //Else, the polygon is send to reparation phase
-            //    auto t_start_repair = std::chrono::high_resolution_clock::now();
-            //    barrieredge_tip_reparation(polygon_seed);
-            //    auto t_end_repair = std::chrono::high_resolution_clock::now();
-            //    t_repair += std::chrono::duration<double, std::milli>(t_end_repair-t_start_repair).count();
-            //}         
+            if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
+                output_seeds.push_back(polygon_seed);
+            }else{ //Else, the polygon is send to reparation phase
+                auto t_start_repair = std::chrono::high_resolution_clock::now();
+                barrieredge_tip_reparation(polygon_seed);
+                auto t_end_repair = std::chrono::high_resolution_clock::now();
+                t_repair += std::chrono::duration<double, std::milli>(t_end_repair-t_start_repair).count();
+            }         
         }    
         t_end = std::chrono::high_resolution_clock::now();
         t_traversal_and_repair = std::chrono::duration<double, std::milli>(t_end-t_start).count();
@@ -222,17 +222,6 @@ public:
         out.close();
     }
 
-
-
-
-    //function whose input is a vector and print the elements of the vector
-    void print_vector(std::vector<int> &vec){
-        std::cout<<vec.size()<<" ";
-        for (auto &v : vec){
-            std::cout << v << " ";
-        }
-        std::cout << std::endl;
-    }
 
     //Print ale file of the polylla mesh
     void print_ALE(std::string filename){
@@ -341,54 +330,9 @@ public:
         out.close();
     }
 
-    //Print a halfedge file
-    //The first line of the file is the number of halfedges
-    //The rest of the lines are the halfedges with the following format:
-    //origin target
-    void print_hedge(std::string file_name){
-        std::cout<<"Print halfedges"<<std::endl;
-        std::ofstream file;
-        file.open(file_name);
-        int n_frontier_edges = 0;
-        for(std::size_t i = 0; i < frontier_edges.size(); i++){
-            if(frontier_edges[i] == true){
-                n_frontier_edges++;
-            }
-        }
-        file<<n_frontier_edges<<std::endl;
-        for(std::size_t i = 0; i < mesh_input->halfEdges(); i++){
-            if(frontier_edges[i] == true){
-                file<<mesh_input->origin(i)<<" "<<mesh_input->target(i)<<"\n";
-            }
-        }
-        file.close();
-    }
-
-    //Return a polygon generated from a seed edge
-    _polygon generate_polygon(int e)
-    {   
-        _polygon poly;
-        //search next frontier-edge
-        int e_init = search_frontier_edge(e);
-        int v_init = mesh_input->origin(e_init);
-        int e_curr = mesh_input->next(e_init);
-        int v_curr = mesh_input->origin(e_curr);
-        poly.push_back(v_curr);
-        while(e_curr != e_init && v_curr != v_init)
-        {   
-            e_curr = search_frontier_edge(e_curr);  
-            //select triangle that contains v_curr as origin
-            e_curr = mesh_input->next(e_curr);
-            v_curr = mesh_input->origin(e_curr);
-            poly.push_back(v_curr);
-        }
-        return poly;
-    }
-
-
 private:
 
-    //Return true is the edge is terminal-edge or terminal border edge, 
+    //Return true if it is the edge is terminal-edge or terminal border edge, 
     //but it only selects one halfedge as terminal-edge, the halfedge with lowest index is selected
     bool is_seed_edge(int e){
         int twin = mesh_input->twin(e);
@@ -396,9 +340,12 @@ private:
         bool is_terminal_edge = (mesh_input->is_interior_face(twin) &&  (max_edges[e] && max_edges[twin]) );
         bool is_terminal_border_edge = (mesh_input->is_border_face(twin) && max_edges[e]);
 
-        return (is_terminal_edge && e < twin ) || is_terminal_border_edge;
-    }
+        if( (is_terminal_edge && e < twin ) || is_terminal_border_edge){
+            return true;
+        }
 
+        return false;
+    }
 
     int Equality(double a, double b, double epsilon)
     {
@@ -408,7 +355,6 @@ private:
     int GreaterEqualthan(double a, double b, double epsilon){
             return Equality(a,b,epsilon) || a > b;
     }
-
 
     //Label max edges of all triangles in the triangulation
     //input: edge e indicent to a triangle t
@@ -460,7 +406,10 @@ private:
         int twin = mesh_input->twin(e);
         bool is_border_edge = mesh_input->is_border_face(e) || mesh_input->is_border_face(twin);
         bool is_not_max_edge = !(max_edges[e] || max_edges[twin]);
-        return is_border_edge || is_not_max_edge;
+        if(is_border_edge || is_not_max_edge)
+            return true;
+        else
+            return false;
     }
 
     //Travel in CCW order around the edges of vertex v from the edge e looking for the next frontier edge
@@ -494,29 +443,21 @@ private:
     {   
         //search next frontier-edge
         int e_init = search_frontier_edge(e);
-        //first frontier-edge is store to calculate the prev of next frontier-edfge
-        int e_prev = e_init; 
-        int v_init = mesh_input->origin(e_init);
+        int e_curr = mesh_input->next(e_init);        
+        int e_fe = e_init; 
 
-        int e_curr = mesh_input->next(e_init);
-        int v_curr = mesh_input->origin(e_curr);
-        
         //travel inside frontier-edges of polygon
-        while(e_curr != e_init && v_curr != v_init){   
+        do{   
             e_curr = search_frontier_edge(e_curr);
-
             //update next of previous frontier-edge
-            mesh_output->set_next(e_prev, e_curr);  
+            mesh_output->set_next(e_fe, e_curr);  
             //update prev of current frontier-edge
-            mesh_output->set_prev(e_curr, e_prev);
+            mesh_output->set_prev(e_curr, e_fe);
 
             //travel to next half-edge
-            e_prev = e_curr;
+            e_fe = e_curr;
             e_curr = mesh_input->next(e_curr);
-            v_curr = mesh_input->origin(e_curr);
-        }
-        mesh_output->set_next(e_prev, e_init);
-        mesh_output->set_prev(e_init, e_prev);
+        }while(e_fe != e_init);
         return e_init;
     }
     
@@ -601,7 +542,7 @@ private:
 
     }
 
-
+/*
     //Generate a polygon from a seed-edge and remove repeated seed from seed_list
     //POSIBLE BUG: el algoritmo no viaja por todos los halfedges dentro de un poligono, 
     //por lo que pueden haber semillas que no se borren y tener poligonos repetidos de output
@@ -647,6 +588,48 @@ private:
         mesh_output->set_prev(e_init, e_prev);
         return e_init;
     }
+*/
+
+    //Generate a polygon from a seed-edge and remove repeated seed from seed_list
+    //POSIBLE BUG: el algoritmo no viaja por todos los halfedges dentro de un poligono, 
+    //por lo que pueden haber semillas que no se borren y tener poligonos repetidos de output
+    int generate_repaired_polygon(const int e, bit_vector &seed_list)
+    {   
+        int e_init = e;
+
+        //search next frontier-edge
+        while(!frontier_edges[e_init]){
+            e_init = mesh_input->CW_edge_to_vertex(e_init);
+            seed_list[e_init] = false; 
+            //seed_list[mesh_input->twin(e_init)] = false;
+        }   
+        int e_curr = mesh_input->next(e_init);    
+        seed_list[e_curr] = false;
+    
+        int e_fe = e_init; 
+
+        //travel inside frontier-edges of polygon
+        do{   
+            while(!frontier_edges[e_curr])
+            {
+                e_curr = mesh_input->CW_edge_to_vertex(e_curr);
+                seed_list[e_curr] = false;
+          //      seed_list[mesh_input->twin(e_curr)] = false;
+            } 
+            //update next of previous frontier-edge
+            mesh_output->set_next(e_fe, e_curr);  
+            //update prev of current frontier-edge
+            mesh_output->set_prev(e_curr, e_fe);
+
+            //travel to next half-edge
+            e_fe = e_curr;
+            e_curr = mesh_input->next(e_curr);
+            seed_list[e_curr] = false;
+
+        }while(e_fe != e_init);
+        return e_init;
+    }
+    
 };
 
 #endif
