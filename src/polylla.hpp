@@ -84,6 +84,14 @@ public:
         construct_Polylla();
     }
 
+
+    //Constructor random data construictor
+    Polylla(int size){
+        this->mesh_input = new Triangulation(size);
+        mesh_output = new Triangulation(*mesh_input);
+        construct_Polylla();
+    }
+
     ~Polylla() {
         //triangles.clear(); 
         max_edges.clear(); 
