@@ -284,8 +284,8 @@ private:
     }
 */
     void construct_interior_halfEdges_from_faces(std::vector<int> &faces){
-        auto hash_for_pair = [n = faces.size()](const std::pair<int, int>& p) {
-            return std::hash<int>{}(p.first)*3*n + std::hash<int>{}(p.second);
+        auto hash_for_pair = [n = 3*this->n_faces](const std::pair<int, int>& p) {
+            return std::hash<int>{}(p.first)*n + std::hash<int>{}(p.second);
         };
         std::unordered_map<_edge, int, decltype(hash_for_pair)> map_edges(3*this->n_faces, hash_for_pair); //set of edges to calculate the boundary and twin edges
         for(std::size_t i = 0; i < n_faces; i++){
