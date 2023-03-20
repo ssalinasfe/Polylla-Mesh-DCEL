@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
         //std::cout<<"output ale in "<<output<<".ale"<<std::endl;
     }else if (argc == 2){
         int size = atoi(argv[1]);
-        std::string output = "uniform_" + std::string(argv[1]);
+        std::string output = "uniform_" + std::string(argv[1]) + "_CPU";
 
         Polylla mesh(size);
         std::cout<<"Done!"<<std::endl;
@@ -55,8 +55,8 @@ int main(int argc, char **argv) {
         mesh.print_stats(output + ".json");
         std::cout<<"output json in "<<output<<".json"<<std::endl;
 
-        mesh.print_OFF(output +".off");
-        std::cout<<"output off in "<<output<<".off"<<std::endl;
+        //mesh.print_OFF(output +".off");
+        //std::cout<<"output off in "<<output<<".off"<<std::endl;
     }else{
         std::cout<<"Usage: "<<argv[0]<<" <off file .off> <output name>"<<std::endl;
         std::cout<<"Usage: "<<argv[0]<<" <node_file .node> <ele_file .ele> <neigh_file .neigh> <output name>"<<std::endl;

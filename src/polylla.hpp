@@ -120,8 +120,8 @@ public:
             max_edges[label_max_edge(mesh_input->incident_halfedge(i))] = true;
          
         auto t_end = std::chrono::high_resolution_clock::now();
-        double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
-        std::cout<<"Labered max edges in "<<elapsed_time_ms<<" ms"<<std::endl;
+        double t_label_max_edges = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+        std::cout<<"Labered max edges in "<<t_label_max_edges<<" ms"<<std::endl;
 
         t_start = std::chrono::high_resolution_clock::now();
         //Label frontier edges
@@ -133,8 +133,8 @@ public:
         }
 
         t_end = std::chrono::high_resolution_clock::now();
-        elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
-        std::cout<<"Labeled frontier edges in "<<elapsed_time_ms<<" ms"<<std::endl;
+        t_label_frontier_edges = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+        std::cout<<"Labeled frontier edges in "<<t_label_frontier_edges<<" ms"<<std::endl;
         
         t_start = std::chrono::high_resolution_clock::now();
         //label seeds edges,
@@ -144,8 +144,8 @@ public:
 
             
         t_end = std::chrono::high_resolution_clock::now();
-        elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end-t_start).count();
-        std::cout<<"Labeled seed edges in "<<elapsed_time_ms<<" ms"<<std::endl;
+        t_label_seed_edges = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+        std::cout<<"Labeled seed edges in "<<t_label_seed_edges<<" ms"<<std::endl;
 
         //Travel phase: Generate polygon mesh
         int polygon_seed;
@@ -153,14 +153,15 @@ public:
         t_start = std::chrono::high_resolution_clock::now();
         for(auto &e : seed_edges){
             polygon_seed = travel_triangles(e);
-            if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
-                output_seeds.push_back(polygon_seed);
-            }else{ //Else, the polygon is send to reparation phase
-                auto t_start_repair = std::chrono::high_resolution_clock::now();
-                barrieredge_tip_reparation(polygon_seed);
-                auto t_end_repair = std::chrono::high_resolution_clock::now();
-                t_repair += std::chrono::duration<double, std::milli>(t_end_repair-t_start_repair).count();
-            }         
+            output_seeds.push_back(polygon_seed);
+            //if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
+            //    output_seeds.push_back(polygon_seed);
+            //}else{ //Else, the polygon is send to reparation phase
+            //    auto t_start_repair = std::chrono::high_resolution_clock::now();
+            //    barrieredge_tip_reparation(polygon_seed);
+            //    auto t_end_repair = std::chrono::high_resolution_clock::now();
+            //    t_repair += std::chrono::duration<double, std::milli>(t_end_repair-t_start_repair).count();
+            //}         
         }    
         t_end = std::chrono::high_resolution_clock::now();
         t_traversal_and_repair = std::chrono::duration<double, std::milli>(t_end-t_start).count();
@@ -204,8 +205,8 @@ public:
         out<<"\"n_barrier_edge_tips\": "<<n_barrier_edge_tips<<","<<std::endl;
         out<<"\"n_half_edges\": "<<mesh_input->halfEdges()<<","<<std::endl;
         out<<"\"n_faces\": "<<mesh_input->faces()<<","<<std::endl;
-        out<<"\"n_vertices\": "<<mesh_input->vertices()<<std::endl;
-        out<<"\"n_polygons_to_repair\": "<<n_polygons_to_repair<<","<<std::endl;
+        out<<"\"n_vertices\": "<<mesh_input->vertices()<<","<<std::endl;
+        out<<"\"n_polygons_to_repair\": "<<n_polygons_to_repair
         out<<"\"n_polygons_added_after_repair\": "<<n_polygons_added_after_repair<<","<<std::endl;
         out<<"\"time_triangulation_generation\": "<<mesh_input->get_triangulation_generation_time()<<","<<std::endl;
         out<<"\"time_to_label_max_edges\": "<<t_label_max_edges<<","<<std::endl;
