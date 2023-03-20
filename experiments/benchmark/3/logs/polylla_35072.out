@@ -1,0 +1,23 @@
+Ejecutando Polylla con tamaño 25745476
+Generating points  
+Generating triangles 
+Triangulation generation time: 97153.3
+Creating Polylla...
+Labered max edges in 22787.5 ms
+Labeled frontier edges in 5714.66 ms
+Labeled seed edges in 7985.77 ms
+Mesh with 25735329 polygons 51480804 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 97153.3 ms
+Time to label max edges 0 ms
+Time to label frontier edges 0 ms
+Time to label seed edges 0 ms
+Time to label total0 ms
+Time to traversal and repair 8453.08 ms
+Time to traversal 8453.08 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 8453.08 ms
+Printing JSON file as uniform_25745476.json
+output json in uniform_25745476.json
+output off in uniform_25745476.off
+Tiempo de ejecución: 222.630 segundos
