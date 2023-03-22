@@ -120,7 +120,7 @@ public:
             max_edges[label_max_edge(mesh_input->incident_halfedge(i))] = true;
          
         auto t_end = std::chrono::high_resolution_clock::now();
-        double t_label_max_edges = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+        t_label_max_edges = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Labered max edges in "<<t_label_max_edges<<" ms"<<std::endl;
 
         t_start = std::chrono::high_resolution_clock::now();
