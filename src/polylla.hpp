@@ -120,7 +120,7 @@ public:
             max_edges[label_max_edge(mesh_input->incident_halfedge(i))] = true;
          
         auto t_end = std::chrono::high_resolution_clock::now();
-        double t_label_max_edges = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+        t_label_max_edges = std::chrono::duration<double, std::milli>(t_end-t_start).count();
         std::cout<<"Labered max edges in "<<t_label_max_edges<<" ms"<<std::endl;
 
         t_start = std::chrono::high_resolution_clock::now();
@@ -206,7 +206,7 @@ public:
         out<<"\"n_half_edges\": "<<mesh_input->halfEdges()<<","<<std::endl;
         out<<"\"n_faces\": "<<mesh_input->faces()<<","<<std::endl;
         out<<"\"n_vertices\": "<<mesh_input->vertices()<<","<<std::endl;
-        out<<"\"n_polygons_to_repair\": "<<n_polygons_to_repair
+        out<<"\"n_polygons_to_repair\": "<<n_polygons_to_repair<<","<<std::endl;
         out<<"\"n_polygons_added_after_repair\": "<<n_polygons_added_after_repair<<","<<std::endl;
         out<<"\"time_triangulation_generation\": "<<mesh_input->get_triangulation_generation_time()<<","<<std::endl;
         out<<"\"time_to_label_max_edges\": "<<t_label_max_edges<<","<<std::endl;
