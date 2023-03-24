@@ -1,0 +1,107 @@
+Tiempo de ejecución: 5.659 segundos
+
+Tiempo de ejecución: 23.361 segundos
+
+Tiempo de ejecución: 44.360 segundos
+
+Tiempo de ejecución: 61.473 segundos
+
+Tiempo de ejecución: 76.297 segundos
+
+Tiempo de ejecución: 94.561 segundos
+
+Tiempo de ejecución: 114.470 segundos
+
+Tiempo de ejecución: 131.182 segundos
+
+Tiempo de ejecución: 151.297 segundos
+
+Tiempo de ejecución: 180.797 segundos
+
+Tiempo de ejecución: 202.437 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.11 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+88.825 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.12 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+88.176 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.13 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+96.457 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.14 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+84.977 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.15 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+70.309 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.16 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+74.960 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.17 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+79.733 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.18 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+88.745 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.19 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+78.796 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.20 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+78.493 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.21 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+77.357 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.22 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+75.372 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.23 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+84.349 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.24 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+78.005 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.25 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+88.341 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.26 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+82.417 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.27 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+68.781 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.28 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+64.937 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.29 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+64.357 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.30 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+67.429 segundos
+
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.31 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+55.809 segundos
+
+slurmstepd: error: Detected 21 oom-kill event(s) in StepId=35400.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.

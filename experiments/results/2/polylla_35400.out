@@ -1,0 +1,436 @@
+Thu 23 Mar 2023 05:46:54 PM -03
+Start: 1000000, End: 100000000, Intervalo: 3193548, Diferencia: 99000000, NSAMPLES: 31
+Valores: 1000000 4194304 7387524 10582009 13771521 16966161 20160100 23357889 26553409 29746116 32936121 36132121 39325441 42510400 45711121 48902049 52099524 55294096 58476609 61669609 64866916 68062500 71250481 74459641 77651344 80838081 84033889 87216921 90421081 93605625 96805921 100000000
+Thu 23 Mar 2023 05:46:54 PM -03
+Ejecutando Polylla con tamaño 1000000
+Generating points  
+Generating triangles 
+Triangulation generation time: 3222.54
+Creating Polylla...
+Labered max edges in 778.129 ms
+Labeled frontier edges in 216.371 ms
+Labeled seed edges in 303.315 ms
+Mesh with 998001 polygons 1998000 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 3222.54 ms
+Time to label max edges 778.129 ms
+Time to label frontier edges 216.371 ms
+Time to label seed edges 303.315 ms
+Time to label total1297.81 ms
+Time to traversal and repair 216.37 ms
+Time to traversal 216.37 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 1514.18 ms
+Printing JSON file as uniform_1000000_CPU.json
+output json in uniform_1000000_CPU.json
+Tiempo de ejecución: 5.659 segundos
+
+Thu 23 Mar 2023 05:46:59 PM -03
+Ejecutando Polylla con tamaño 4194304
+Generating points  
+Generating triangles 
+Triangulation generation time: 14964
+Creating Polylla...
+Labered max edges in 3399.85 ms
+Labeled frontier edges in 998.596 ms
+Labeled seed edges in 1271.17 ms
+Mesh with 4190209 polygons 8384512 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 14964 ms
+Time to label max edges 3399.85 ms
+Time to label frontier edges 998.596 ms
+Time to label seed edges 1271.17 ms
+Time to label total5669.62 ms
+Time to traversal and repair 942.163 ms
+Time to traversal 942.163 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 6611.78 ms
+Printing JSON file as uniform_4194304_CPU.json
+output json in uniform_4194304_CPU.json
+Tiempo de ejecución: 23.361 segundos
+
+Thu 23 Mar 2023 05:47:23 PM -03
+Ejecutando Polylla con tamaño 7387524
+Generating points  
+Generating triangles 
+Triangulation generation time: 30316.1
+Creating Polylla...
+Labered max edges in 5761.38 ms
+Labeled frontier edges in 1634.36 ms
+Labeled seed edges in 2262.2 ms
+Mesh with 7382089 polygons 14769612 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 30316.1 ms
+Time to label max edges 5761.38 ms
+Time to label frontier edges 1634.36 ms
+Time to label seed edges 2262.2 ms
+Time to label total9657.94 ms
+Time to traversal and repair 1901.83 ms
+Time to traversal 1901.83 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 11559.8 ms
+Printing JSON file as uniform_7387524_CPU.json
+output json in uniform_7387524_CPU.json
+Tiempo de ejecución: 44.360 segundos
+
+Thu 23 Mar 2023 05:48:07 PM -03
+Ejecutando Polylla con tamaño 10582009
+Generating points  
+Generating triangles 
+Triangulation generation time: 41419.7
+Creating Polylla...
+Labered max edges in 8783.3 ms
+Labeled frontier edges in 2558.85 ms
+Labeled seed edges in 3156.76 ms
+Mesh with 10575504 polygons 21157512 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 41419.7 ms
+Time to label max edges 8783.3 ms
+Time to label frontier edges 2558.85 ms
+Time to label seed edges 3156.76 ms
+Time to label total14498.9 ms
+Time to traversal and repair 2565.78 ms
+Time to traversal 2565.78 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 17064.7 ms
+Printing JSON file as uniform_10582009_CPU.json
+output json in uniform_10582009_CPU.json
+Tiempo de ejecución: 61.473 segundos
+
+Thu 23 Mar 2023 05:49:09 PM -03
+Ejecutando Polylla con tamaño 13771521
+Generating points  
+Generating triangles 
+Triangulation generation time: 50544.2
+Creating Polylla...
+Labered max edges in 11284.8 ms
+Labeled frontier edges in 3160.76 ms
+Labeled seed edges in 4310.28 ms
+Mesh with 13764100 polygons 27535620 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 50544.2 ms
+Time to label max edges 11284.8 ms
+Time to label frontier edges 3160.76 ms
+Time to label seed edges 4310.28 ms
+Time to label total18755.9 ms
+Time to traversal and repair 3112.85 ms
+Time to traversal 3112.85 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 21868.7 ms
+Printing JSON file as uniform_13771521_CPU.json
+output json in uniform_13771521_CPU.json
+Tiempo de ejecución: 76.297 segundos
+
+Thu 23 Mar 2023 05:50:25 PM -03
+Ejecutando Polylla con tamaño 16966161
+Generating points  
+Generating triangles 
+Triangulation generation time: 62957.5
+Creating Polylla...
+Labered max edges in 14318.2 ms
+Labeled frontier edges in 3679.04 ms
+Labeled seed edges in 5238.73 ms
+Mesh with 16957924 polygons 33924084 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 62957.5 ms
+Time to label max edges 14318.2 ms
+Time to label frontier edges 3679.04 ms
+Time to label seed edges 5238.73 ms
+Time to label total23236 ms
+Time to traversal and repair 3989.18 ms
+Time to traversal 3989.18 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 27225.1 ms
+Printing JSON file as uniform_16966161_CPU.json
+output json in uniform_16966161_CPU.json
+Tiempo de ejecución: 94.561 segundos
+
+Thu 23 Mar 2023 05:51:59 PM -03
+Ejecutando Polylla con tamaño 20160100
+Generating points  
+Generating triangles 
+Triangulation generation time: 76567.8
+Creating Polylla...
+Labered max edges in 16616.3 ms
+Labeled frontier edges in 4833.89 ms
+Labeled seed edges in 6152.73 ms
+Mesh with 20151121 polygons 40311220 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 76567.8 ms
+Time to label max edges 16616.3 ms
+Time to label frontier edges 4833.89 ms
+Time to label seed edges 6152.73 ms
+Time to label total27602.9 ms
+Time to traversal and repair 4905.9 ms
+Time to traversal 4905.9 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 32508.8 ms
+Printing JSON file as uniform_20160100_CPU.json
+output json in uniform_20160100_CPU.json
+Tiempo de ejecución: 114.470 segundos
+
+Thu 23 Mar 2023 05:53:54 PM -03
+Ejecutando Polylla con tamaño 23357889
+Generating points  
+Generating triangles 
+Triangulation generation time: 87586.2
+Creating Polylla...
+Labered max edges in 18444.2 ms
+Labeled frontier edges in 5597.08 ms
+Labeled seed edges in 7135.31 ms
+Mesh with 23348224 polygons 46706112 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 87586.2 ms
+Time to label max edges 18444.2 ms
+Time to label frontier edges 5597.08 ms
+Time to label seed edges 7135.31 ms
+Time to label total31176.6 ms
+Time to traversal and repair 6000.43 ms
+Time to traversal 6000.43 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 37177 ms
+Printing JSON file as uniform_23357889_CPU.json
+output json in uniform_23357889_CPU.json
+Tiempo de ejecución: 131.182 segundos
+
+Thu 23 Mar 2023 05:56:05 PM -03
+Ejecutando Polylla con tamaño 26553409
+Generating points  
+Generating triangles 
+Triangulation generation time: 102022
+Creating Polylla...
+Labered max edges in 21156 ms
+Labeled frontier edges in 5921.81 ms
+Labeled seed edges in 7952.26 ms
+Mesh with 26543104 polygons 53096512 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 102022 ms
+Time to label max edges 21156 ms
+Time to label frontier edges 5921.81 ms
+Time to label seed edges 7952.26 ms
+Time to label total35030.1 ms
+Time to traversal and repair 6919.66 ms
+Time to traversal 6919.66 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 41949.7 ms
+Printing JSON file as uniform_26553409_CPU.json
+output json in uniform_26553409_CPU.json
+Tiempo de ejecución: 151.297 segundos
+
+Thu 23 Mar 2023 05:58:36 PM -03
+Ejecutando Polylla con tamaño 29746116
+Generating points  
+Generating triangles 
+Triangulation generation time: 124138
+Creating Polylla...
+Labered max edges in 24452 ms
+Labeled frontier edges in 7237.27 ms
+Labeled seed edges in 8940.62 ms
+Mesh with 29735209 polygons 59481324 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 124138 ms
+Time to label max edges 24452 ms
+Time to label frontier edges 7237.27 ms
+Time to label seed edges 8940.62 ms
+Time to label total40629.9 ms
+Time to traversal and repair 7969.57 ms
+Time to traversal 7969.57 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 48599.5 ms
+Printing JSON file as uniform_29746116_CPU.json
+output json in uniform_29746116_CPU.json
+Tiempo de ejecución: 180.797 segundos
+
+Thu 23 Mar 2023 06:01:37 PM -03
+Ejecutando Polylla con tamaño 32936121
+Generating points  
+Generating triangles 
+Triangulation generation time: 141737
+Creating Polylla...
+Labered max edges in 26005.5 ms
+Labeled frontier edges in 7329.85 ms
+Labeled seed edges in 9890.77 ms
+Mesh with 32924644 polygons 65860764 edges and 0 barrier-edge tips.
+Done!
+Time to generate Triangulation: 141737 ms
+Time to label max edges 26005.5 ms
+Time to label frontier edges 7329.85 ms
+Time to label seed edges 9890.77 ms
+Time to label total43226.1 ms
+Time to traversal and repair 8286.38 ms
+Time to traversal 8286.38 ms
+Time to repair 0 ms
+Time to generate polygonal mesh 51512.5 ms
+Printing JSON file as uniform_32936121_CPU.json
+output json in uniform_32936121_CPU.json
+Tiempo de ejecución: 202.437 segundos
+
+Thu 23 Mar 2023 06:05:00 PM -03
+Ejecutando Polylla con tamaño 36132121
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.11 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+88.825 segundos
+
+Thu 23 Mar 2023 06:06:29 PM -03
+Ejecutando Polylla con tamaño 39325441
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.12 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+88.176 segundos
+
+Thu 23 Mar 2023 06:07:57 PM -03
+Ejecutando Polylla con tamaño 42510400
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.13 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+96.457 segundos
+
+Thu 23 Mar 2023 06:09:33 PM -03
+Ejecutando Polylla con tamaño 45711121
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.14 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+84.977 segundos
+
+Thu 23 Mar 2023 06:10:58 PM -03
+Ejecutando Polylla con tamaño 48902049
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.15 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+70.309 segundos
+
+Thu 23 Mar 2023 06:12:08 PM -03
+Ejecutando Polylla con tamaño 52099524
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.16 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+74.960 segundos
+
+Thu 23 Mar 2023 06:13:23 PM -03
+Ejecutando Polylla con tamaño 55294096
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.17 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+79.733 segundos
+
+Thu 23 Mar 2023 06:14:43 PM -03
+Ejecutando Polylla con tamaño 58476609
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.18 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+88.745 segundos
+
+Thu 23 Mar 2023 06:16:12 PM -03
+Ejecutando Polylla con tamaño 61669609
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.19 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+78.796 segundos
+
+Thu 23 Mar 2023 06:17:31 PM -03
+Ejecutando Polylla con tamaño 64866916
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.20 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+78.493 segundos
+
+Thu 23 Mar 2023 06:18:49 PM -03
+Ejecutando Polylla con tamaño 68062500
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.21 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+77.357 segundos
+
+Thu 23 Mar 2023 06:20:07 PM -03
+Ejecutando Polylla con tamaño 71250481
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.22 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+75.372 segundos
+
+Thu 23 Mar 2023 06:21:22 PM -03
+Ejecutando Polylla con tamaño 74459641
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.23 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+84.349 segundos
+
+Thu 23 Mar 2023 06:22:46 PM -03
+Ejecutando Polylla con tamaño 77651344
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.24 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+78.005 segundos
+
+Thu 23 Mar 2023 06:24:04 PM -03
+Ejecutando Polylla con tamaño 80838081
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.25 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+88.341 segundos
+
+Thu 23 Mar 2023 06:25:33 PM -03
+Ejecutando Polylla con tamaño 84033889
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.26 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+82.417 segundos
+
+Thu 23 Mar 2023 06:26:55 PM -03
+Ejecutando Polylla con tamaño 87216921
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.27 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+68.781 segundos
+
+Thu 23 Mar 2023 06:28:04 PM -03
+Ejecutando Polylla con tamaño 90421081
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.28 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+64.937 segundos
+
+Thu 23 Mar 2023 06:29:09 PM -03
+Ejecutando Polylla con tamaño 93605625
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.29 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+64.357 segundos
+
+Thu 23 Mar 2023 06:30:13 PM -03
+Ejecutando Polylla con tamaño 96805921
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.30 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+67.429 segundos
+
+Thu 23 Mar 2023 06:31:21 PM -03
+Ejecutando Polylla con tamaño 100000000
+Generating points  
+Generating triangles 
+Tiempo de ejecución: slurmstepd: error: Detected 1 oom-kill event(s) in StepId=35400.31 cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
+srun: error: nodeGPU01: task 0: Out Of Memory
+55.809 segundos
+
+Thu 23 Mar 2023 06:32:16 PM -03
