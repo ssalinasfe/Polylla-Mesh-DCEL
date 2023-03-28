@@ -283,11 +283,13 @@ private:
         }
     }
 */
-    void construct_interior_halfEdges_from_faces(std::vector<int> &faces){
+ void construct_interior_halfEdges_from_faces(std::vector<int> &faces){
+        std::cout << "0. aca "<< std::endl;	
         auto hash_for_pair = [n = 3*this->n_faces](const std::pair<int, int>& p) {
             return std::hash<int>{}(p.first)*n + std::hash<int>{}(p.second);
         };
         std::unordered_map<_edge, int, decltype(hash_for_pair)> map_edges(3*this->n_faces, hash_for_pair); //set of edges to calculate the boundary and twin edges
+        std::cout << "1. aca "<< std::endl;
         for(std::size_t i = 0; i < n_faces; i++){
             for(std::size_t j = 0; j < 3; j++){
                 halfEdge he;
@@ -302,7 +304,9 @@ private:
                 map_edges[std::make_pair(v_origin, v_target)] = i*3+j;
                 HalfEdges.push_back(he);
             }
+            //std::cout << i << std::endl;
         }
+        std::cout << "2. aca "<< std::endl;	
         
         //Calculate twin halfedge and boundary halfedges from set_edges
         std::unordered_map<_edge,int, decltype(hash_for_pair)>::iterator it;
@@ -325,6 +329,7 @@ private:
                 }
             }
         }
+        std::cout << "3. aca "<< std::endl;	
     }
     //Generate interior halfedges using faces and neigh vectors
     //also associate each vertex with an incident halfedge
@@ -516,9 +521,12 @@ public:
         std::cout<<"Reading OFF file "<<OFF_file<<std::endl;
         std::vector<int> faces = read_OFFfile(OFF_file);
 
+        std::cout<<"Constructing interior halfedges"<<std::endl;
         auto t_start = std::chrono::high_resolution_clock::now();
         HalfEdges.reserve(3*n_vertices);
+        std::cout<<"Constructing interior halfedges"<<std::endl;
         construct_interior_halfEdges_from_faces(faces);
+        std::cout<<"Constructing exterior halfedges"<<std::endl;
         construct_exterior_halfEdges();
 
         auto t_end = std::chrono::high_resolution_clock::now();
@@ -570,11 +578,14 @@ public:
         }
 
         n_faces = faces.size()/3;
+        std::cout<<"estimao "<< n_faces<<" final "<<n_faces<<std::endl;
 
-//        std::cout<<"Constructing halfedges "<<std::endl;
+        std::cout<<"Constructing halfedges..."<<std::endl;
         auto t_start = std::chrono::high_resolution_clock::now();      
         HalfEdges.reserve(3*n_vertices);
+        std::cout<<"Constructing interior halfedges"<<std::endl;
         construct_interior_halfEdges_from_faces(faces);
+        std::cout<<"Constructing exterior halfedges"<<std::endl;
         construct_exterior_halfEdges();
 
         auto t_end = std::chrono::high_resolution_clock::now();

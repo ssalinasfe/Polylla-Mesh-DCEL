@@ -5,6 +5,8 @@ project(Polylla)
 add_subdirectory(src)
 include_directories(src)
 
+set(Polylla -O3)
+
 add_executable(Polylla main.cpp)
 
 target_link_libraries(Polylla PUBLIC meshfiles)

@@ -1,0 +1,927 @@
+Mon 27 Mar 2023 08:06:50 PM -03
+Start: 1000000, End: 44312500, Intervalo: 1353515, Diferencia: 43312500, NSAMPLES: 32
+Mon 27 Mar 2023 08:06:50 PM -03
+Ejecutando Polylla con tamaño 1000000
+Reading OFF file ../../../data/1000000_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 1004.76 ms
+Labeled frontier edges in 277.339 ms
+Labeled seed edges in 348.565 ms
+Mesh with 322376 polygons 1322508 edges and 19565 barrier-edge tips.
+Time to generate Triangulation: 4535.28 ms
+Time to label max edges 1004.76 ms
+Time to label frontier edges 277.339 ms
+Time to label seed edges 348.565 ms
+Time to label total1630.66 ms
+Time to traversal and repair 385.885 ms
+Time to traversal 339.897 ms
+Time to repair 45.988 ms
+Time to generate polygonal mesh 2016.54 ms
+Printing JSON file as uniform_1000000.json
+output json in uniform_1000000.json
+Tiempo de ejecución: 11.448 segundos
+
+Mon 27 Mar 2023 08:07:01 PM -03
+Ejecutando Polylla con tamaño 2353515
+Reading OFF file ../../../data/2353515_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 2415.19 ms
+Labeled frontier edges in 652.148 ms
+Labeled seed edges in 818.119 ms
+Mesh with 757792 polygons 3111574 edges and 46154 barrier-edge tips.
+Time to generate Triangulation: 11281.9 ms
+Time to label max edges 2415.19 ms
+Time to label frontier edges 652.148 ms
+Time to label seed edges 818.119 ms
+Time to label total3885.45 ms
+Time to traversal and repair 917.364 ms
+Time to traversal 807.771 ms
+Time to repair 109.593 ms
+Time to generate polygonal mesh 4802.82 ms
+Printing JSON file as uniform_2353515.json
+output json in uniform_2353515.json
+Tiempo de ejecución: 26.717 segundos
+
+Mon 27 Mar 2023 08:07:28 PM -03
+Ejecutando Polylla con tamaño 3707030
+Reading OFF file ../../../data/3707030_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 3843.55 ms
+Labeled frontier edges in 1030.17 ms
+Labeled seed edges in 1300.16 ms
+Mesh with 1194177 polygons 4901674 edges and 73257 barrier-edge tips.
+Time to generate Triangulation: 18211.8 ms
+Time to label max edges 3843.55 ms
+Time to label frontier edges 1030.17 ms
+Time to label seed edges 1300.16 ms
+Time to label total6173.87 ms
+Time to traversal and repair 1557.46 ms
+Time to traversal 1363.04 ms
+Time to repair 194.42 ms
+Time to generate polygonal mesh 7731.34 ms
+Printing JSON file as uniform_3707030.json
+output json in uniform_3707030.json
+Tiempo de ejecución: 42.948 segundos
+
+Mon 27 Mar 2023 08:08:11 PM -03
+Ejecutando Polylla con tamaño 5060545
+Reading OFF file ../../../data/5060545_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 5275.92 ms
+Labeled frontier edges in 1438.94 ms
+Labeled seed edges in 1769.88 ms
+Mesh with 1631507 polygons 6692647 edges and 100591 barrier-edge tips.
+Time to generate Triangulation: 25212.2 ms
+Time to label max edges 5275.92 ms
+Time to label frontier edges 1438.94 ms
+Time to label seed edges 1769.88 ms
+Time to label total8484.74 ms
+Time to traversal and repair 1977.51 ms
+Time to traversal 1735.39 ms
+Time to repair 242.123 ms
+Time to generate polygonal mesh 10462.3 ms
+Printing JSON file as uniform_5060545.json
+output json in uniform_5060545.json
+Tiempo de ejecución: 58.177 segundos
+
+Mon 27 Mar 2023 08:09:09 PM -03
+Ejecutando Polylla con tamaño 6414060
+Reading OFF file ../../../data/6414060_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 6689.1 ms
+Labeled frontier edges in 1803.79 ms
+Labeled seed edges in 2315.61 ms
+Mesh with 2067637 polygons 8482485 edges and 127526 barrier-edge tips.
+Time to generate Triangulation: 32360.2 ms
+Time to label max edges 6689.1 ms
+Time to label frontier edges 1803.79 ms
+Time to label seed edges 2315.61 ms
+Time to label total10808.5 ms
+Time to traversal and repair 2505.93 ms
+Time to traversal 2198.67 ms
+Time to repair 307.254 ms
+Time to generate polygonal mesh 13314.4 ms
+Printing JSON file as uniform_6414060.json
+output json in uniform_6414060.json
+Tiempo de ejecución: 73.824 segundos
+
+Mon 27 Mar 2023 08:10:23 PM -03
+Ejecutando Polylla con tamaño 7767575
+Reading OFF file ../../../data/7767575_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 8125.18 ms
+Labeled frontier edges in 2153.99 ms
+Labeled seed edges in 2688.94 ms
+Mesh with 2503451 polygons 10271980 edges and 153759 barrier-edge tips.
+Time to generate Triangulation: 40482.4 ms
+Time to label max edges 8125.18 ms
+Time to label frontier edges 2153.99 ms
+Time to label seed edges 2688.94 ms
+Time to label total12968.1 ms
+Time to traversal and repair 3075.22 ms
+Time to traversal 2703.47 ms
+Time to repair 371.749 ms
+Time to generate polygonal mesh 16043.3 ms
+Printing JSON file as uniform_7767575.json
+output json in uniform_7767575.json
+Tiempo de ejecución: 90.673 segundos
+
+Mon 27 Mar 2023 08:11:54 PM -03
+Ejecutando Polylla con tamaño 9121090
+Reading OFF file ../../../data/9121090_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 9580.61 ms
+Labeled frontier edges in 2590 ms
+Labeled seed edges in 3316.87 ms
+Mesh with 2939663 polygons 12061874 edges and 180998 barrier-edge tips.
+Time to generate Triangulation: 46806.8 ms
+Time to label max edges 9580.61 ms
+Time to label frontier edges 2590 ms
+Time to label seed edges 3316.87 ms
+Time to label total15487.5 ms
+Time to traversal and repair 3595.67 ms
+Time to traversal 3156.38 ms
+Time to repair 439.292 ms
+Time to generate polygonal mesh 19083.2 ms
+Printing JSON file as uniform_9121090.json
+output json in uniform_9121090.json
+Tiempo de ejecución: 105.757 segundos
+
+Mon 27 Mar 2023 08:13:39 PM -03
+Ejecutando Polylla con tamaño 10474605
+Reading OFF file ../../../data/10474605_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 10827.4 ms
+Labeled frontier edges in 2936.2 ms
+Labeled seed edges in 3641.89 ms
+Mesh with 3376695 polygons 13852614 edges and 207005 barrier-edge tips.
+Time to generate Triangulation: 55152.3 ms
+Time to label max edges 10827.4 ms
+Time to label frontier edges 2936.2 ms
+Time to label seed edges 3641.89 ms
+Time to label total17405.5 ms
+Time to traversal and repair 4082.74 ms
+Time to traversal 3581.61 ms
+Time to repair 501.126 ms
+Time to generate polygonal mesh 21488.2 ms
+Printing JSON file as uniform_10474605.json
+output json in uniform_10474605.json
+Tiempo de ejecución: 122.957 segundos
+
+Mon 27 Mar 2023 08:15:42 PM -03
+Ejecutando Polylla con tamaño 11828120
+Reading OFF file ../../../data/11828120_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 12446.6 ms
+Labeled frontier edges in 3685.12 ms
+Labeled seed edges in 4307.5 ms
+Mesh with 3813392 polygons 15642934 edges and 234188 barrier-edge tips.
+Time to generate Triangulation: 68928.5 ms
+Time to label max edges 12446.6 ms
+Time to label frontier edges 3685.12 ms
+Time to label seed edges 4307.5 ms
+Time to label total20439.2 ms
+Time to traversal and repair 4924.49 ms
+Time to traversal 4343.17 ms
+Time to repair 581.322 ms
+Time to generate polygonal mesh 25363.7 ms
+Printing JSON file as uniform_11828120.json
+output json in uniform_11828120.json
+Tiempo de ejecución: 147.639 segundos
+
+Mon 27 Mar 2023 08:18:10 PM -03
+Ejecutando Polylla con tamaño 13181635
+Reading OFF file ../../../data/13181635_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 13730.5 ms
+Labeled frontier edges in 3824.39 ms
+Labeled seed edges in 4595.12 ms
+Mesh with 4250315 polygons 17433585 edges and 260986 barrier-edge tips.
+Time to generate Triangulation: 71358.4 ms
+Time to label max edges 13730.5 ms
+Time to label frontier edges 3824.39 ms
+Time to label seed edges 4595.12 ms
+Time to label total22150 ms
+Time to traversal and repair 5141.1 ms
+Time to traversal 4506.35 ms
+Time to repair 634.752 ms
+Time to generate polygonal mesh 27291.1 ms
+Printing JSON file as uniform_13181635.json
+output json in uniform_13181635.json
+Tiempo de ejecución: 157.170 segundos
+
+Mon 27 Mar 2023 08:20:47 PM -03
+Ejecutando Polylla con tamaño 14535150
+Reading OFF file ../../../data/14535150_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 15173.5 ms
+Labeled frontier edges in 4551.59 ms
+Labeled seed edges in 5572.6 ms
+Mesh with 4686504 polygons 19223451 edges and 288113 barrier-edge tips.
+Time to generate Triangulation: 85858.1 ms
+Time to label max edges 15173.5 ms
+Time to label frontier edges 4551.59 ms
+Time to label seed edges 5572.6 ms
+Time to label total25297.7 ms
+Time to traversal and repair 6629.91 ms
+Time to traversal 5895.24 ms
+Time to repair 734.672 ms
+Time to generate polygonal mesh 31927.6 ms
+Printing JSON file as uniform_14535150.json
+output json in uniform_14535150.json
+Tiempo de ejecución: 183.525 segundos
+
+Mon 27 Mar 2023 08:23:51 PM -03
+Ejecutando Polylla con tamaño 15888665
+Reading OFF file ../../../data/15888665_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 16711.3 ms
+Labeled frontier edges in 4604.86 ms
+Labeled seed edges in 5617.91 ms
+Mesh with 5122995 polygons 21013684 edges and 314823 barrier-edge tips.
+Time to generate Triangulation: 89325.7 ms
+Time to label max edges 16711.3 ms
+Time to label frontier edges 4604.86 ms
+Time to label seed edges 5617.91 ms
+Time to label total26934.1 ms
+Time to traversal and repair 6298.39 ms
+Time to traversal 5531.74 ms
+Time to repair 766.649 ms
+Time to generate polygonal mesh 33232.5 ms
+Printing JSON file as uniform_15888665.json
+output json in uniform_15888665.json
+Tiempo de ejecución: 194.696 segundos
+
+Mon 27 Mar 2023 08:27:05 PM -03
+Ejecutando Polylla con tamaño 17242180
+Reading OFF file ../../../data/17242180_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 18047.2 ms
+Labeled frontier edges in 5019.06 ms
+Labeled seed edges in 6630.18 ms
+Mesh with 5558997 polygons 22803310 edges and 341472 barrier-edge tips.
+Time to generate Triangulation: 103422 ms
+Time to label max edges 18047.2 ms
+Time to label frontier edges 5019.06 ms
+Time to label seed edges 6630.18 ms
+Time to label total29696.5 ms
+Time to traversal and repair 7299.64 ms
+Time to traversal 6420.56 ms
+Time to repair 879.08 ms
+Time to generate polygonal mesh 36996.1 ms
+Printing JSON file as uniform_17242180.json
+output json in uniform_17242180.json
+Tiempo de ejecución: 218.832 segundos
+
+Mon 27 Mar 2023 08:30:44 PM -03
+Ejecutando Polylla con tamaño 18595695
+Reading OFF file ../../../data/18595695_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 19416.6 ms
+Labeled frontier edges in 5825.3 ms
+Labeled seed edges in 7226.42 ms
+Mesh with 5996455 polygons 24594472 edges and 368271 barrier-edge tips.
+Time to generate Triangulation: 120807 ms
+Time to label max edges 19416.6 ms
+Time to label frontier edges 5825.3 ms
+Time to label seed edges 7226.42 ms
+Time to label total32468.3 ms
+Time to traversal and repair 8938.57 ms
+Time to traversal 7964.06 ms
+Time to repair 974.514 ms
+Time to generate polygonal mesh 41406.9 ms
+Printing JSON file as uniform_18595695.json
+output json in uniform_18595695.json
+Tiempo de ejecución: 248.972 segundos
+
+Mon 27 Mar 2023 08:34:53 PM -03
+Ejecutando Polylla con tamaño 19949210
+Reading OFF file ../../../data/19949210_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 21122.1 ms
+Labeled frontier edges in 5774.95 ms
+Labeled seed edges in 7201.32 ms
+Mesh with 6432794 polygons 26384486 edges and 395437 barrier-edge tips.
+Time to generate Triangulation: 123473 ms
+Time to label max edges 21122.1 ms
+Time to label frontier edges 5774.95 ms
+Time to label seed edges 7201.32 ms
+Time to label total34098.4 ms
+Time to traversal and repair 8552.8 ms
+Time to traversal 7537.42 ms
+Time to repair 1015.37 ms
+Time to generate polygonal mesh 42651.2 ms
+Printing JSON file as uniform_19949210.json
+output json in uniform_19949210.json
+Tiempo de ejecución: 258.009 segundos
+
+Mon 27 Mar 2023 08:39:11 PM -03
+Ejecutando Polylla con tamaño 21302725
+Reading OFF file ../../../data/21302725_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 22932.6 ms
+Labeled frontier edges in 6693.35 ms
+Labeled seed edges in 8165.34 ms
+Mesh with 6869270 polygons 28174780 edges and 422861 barrier-edge tips.
+Time to generate Triangulation: 137354 ms
+Time to label max edges 22932.6 ms
+Time to label frontier edges 6693.35 ms
+Time to label seed edges 8165.34 ms
+Time to label total37791.3 ms
+Time to traversal and repair 12048.7 ms
+Time to traversal 10867.3 ms
+Time to repair 1181.46 ms
+Time to generate polygonal mesh 49840 ms
+Printing JSON file as uniform_21302725.json
+output json in uniform_21302725.json
+Tiempo de ejecución: 284.613 segundos
+
+Mon 27 Mar 2023 08:43:56 PM -03
+Ejecutando Polylla con tamaño 22656240
+Reading OFF file ../../../data/22656240_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 24350 ms
+Labeled frontier edges in 7181.89 ms
+Labeled seed edges in 8619.08 ms
+Mesh with 7305419 polygons 29964486 edges and 449278 barrier-edge tips.
+Time to generate Triangulation: 151365 ms
+Time to label max edges 24350 ms
+Time to label frontier edges 7181.89 ms
+Time to label seed edges 8619.08 ms
+Time to label total40151 ms
+Time to traversal and repair 13945 ms
+Time to traversal 12695.3 ms
+Time to repair 1249.7 ms
+Time to generate polygonal mesh 54096 ms
+Printing JSON file as uniform_22656240.json
+output json in uniform_22656240.json
+Tiempo de ejecución: 311.852 segundos
+
+Mon 27 Mar 2023 08:49:08 PM -03
+Ejecutando Polylla con tamaño 24009755
+Reading OFF file ../../../data/24009755_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 25797.6 ms
+Labeled frontier edges in 7231.22 ms
+Labeled seed edges in 8809.05 ms
+Mesh with 7741281 polygons 31754046 edges and 476083 barrier-edge tips.
+Time to generate Triangulation: 158344 ms
+Time to label max edges 25797.6 ms
+Time to label frontier edges 7231.22 ms
+Time to label seed edges 8809.05 ms
+Time to label total41837.9 ms
+Time to traversal and repair 13441.5 ms
+Time to traversal 12130.6 ms
+Time to repair 1310.83 ms
+Time to generate polygonal mesh 55279.3 ms
+Printing JSON file as uniform_24009755.json
+output json in uniform_24009755.json
+Tiempo de ejecución: 324.237 segundos
+
+Mon 27 Mar 2023 08:54:32 PM -03
+Ejecutando Polylla con tamaño 25363270
+Reading OFF file ../../../data/25363270_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 27501.2 ms
+Labeled frontier edges in 7942.24 ms
+Labeled seed edges in 9608.25 ms
+Mesh with 8176351 polygons 33542766 edges and 502927 barrier-edge tips.
+Time to generate Triangulation: 166492 ms
+Time to label max edges 27501.2 ms
+Time to label frontier edges 7942.24 ms
+Time to label seed edges 9608.25 ms
+Time to label total45051.7 ms
+Time to traversal and repair 14403.4 ms
+Time to traversal 13001 ms
+Time to repair 1402.39 ms
+Time to generate polygonal mesh 59455.1 ms
+Printing JSON file as uniform_25363270.json
+output json in uniform_25363270.json
+Tiempo de ejecución: 342.888 segundos
+
+Mon 27 Mar 2023 09:00:15 PM -03
+Ejecutando Polylla con tamaño 26716785
+Reading OFF file ../../../data/26716785_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 28959.3 ms
+Labeled frontier edges in 8291.15 ms
+Labeled seed edges in 10143 ms
+Mesh with 8611669 polygons 35331711 edges and 529338 barrier-edge tips.
+Time to generate Triangulation: 178926 ms
+Time to label max edges 28959.3 ms
+Time to label frontier edges 8291.15 ms
+Time to label seed edges 10143 ms
+Time to label total47393.4 ms
+Time to traversal and repair 16564.6 ms
+Time to traversal 15048.1 ms
+Time to repair 1516.43 ms
+Time to generate polygonal mesh 63957.9 ms
+Printing JSON file as uniform_26716785.json
+output json in uniform_26716785.json
+Tiempo de ejecución: 369.069 segundos
+
+Mon 27 Mar 2023 09:06:24 PM -03
+Ejecutando Polylla con tamaño 28070300
+Reading OFF file ../../../data/28070300_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 30262.7 ms
+Labeled frontier edges in 8823.55 ms
+Labeled seed edges in 10992.5 ms
+Mesh with 9050075 polygons 37123760 edges and 556305 barrier-edge tips.
+Time to generate Triangulation: 193297 ms
+Time to label max edges 30262.7 ms
+Time to label frontier edges 8823.55 ms
+Time to label seed edges 10992.5 ms
+Time to label total50078.7 ms
+Time to traversal and repair 16526.8 ms
+Time to traversal 14873.9 ms
+Time to repair 1652.95 ms
+Time to generate polygonal mesh 66605.6 ms
+Printing JSON file as uniform_28070300.json
+output json in uniform_28070300.json
+Tiempo de ejecución: 391.053 segundos
+
+Mon 27 Mar 2023 09:12:55 PM -03
+Ejecutando Polylla con tamaño 29423815
+Reading OFF file ../../../data/29423815_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 31547.3 ms
+Labeled frontier edges in 9353.56 ms
+Labeled seed edges in 10966 ms
+Mesh with 9486592 polygons 38914088 edges and 582489 barrier-edge tips.
+Time to generate Triangulation: 202644 ms
+Time to label max edges 31547.3 ms
+Time to label frontier edges 9353.56 ms
+Time to label seed edges 10966 ms
+Time to label total51866.9 ms
+Time to traversal and repair 17437.1 ms
+Time to traversal 15702.5 ms
+Time to repair 1734.57 ms
+Time to generate polygonal mesh 69304 ms
+Printing JSON file as uniform_29423815.json
+output json in uniform_29423815.json
+Tiempo de ejecución: 408.813 segundos
+
+Mon 27 Mar 2023 09:19:44 PM -03
+Ejecutando Polylla con tamaño 30777330
+Reading OFF file ../../../data/30777330_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 33906.9 ms
+Labeled frontier edges in 9867.89 ms
+Labeled seed edges in 11617.8 ms
+Mesh with 9923255 polygons 40704376 edges and 609272 barrier-edge tips.
+Time to generate Triangulation: 211008 ms
+Time to label max edges 33906.9 ms
+Time to label frontier edges 9867.89 ms
+Time to label seed edges 11617.8 ms
+Time to label total55392.6 ms
+Time to traversal and repair 17643.1 ms
+Time to traversal 15820.4 ms
+Time to repair 1822.68 ms
+Time to generate polygonal mesh 73035.6 ms
+Printing JSON file as uniform_30777330.json
+output json in uniform_30777330.json
+Tiempo de ejecución: 429.276 segundos
+
+Mon 27 Mar 2023 09:26:53 PM -03
+Ejecutando Polylla con tamaño 32130845
+Reading OFF file ../../../data/32130845_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 36329.2 ms
+Labeled frontier edges in 10378.7 ms
+Labeled seed edges in 12097.4 ms
+Mesh with 10359791 polygons 42494669 edges and 635292 barrier-edge tips.
+Time to generate Triangulation: 218899 ms
+Time to label max edges 36329.2 ms
+Time to label frontier edges 10378.7 ms
+Time to label seed edges 12097.4 ms
+Time to label total58805.2 ms
+Time to traversal and repair 19521.1 ms
+Time to traversal 17567 ms
+Time to repair 1954.11 ms
+Time to generate polygonal mesh 78326.4 ms
+Printing JSON file as uniform_32130845.json
+output json in uniform_32130845.json
+Tiempo de ejecución: 445.181 segundos
+
+Mon 27 Mar 2023 09:34:18 PM -03
+Ejecutando Polylla con tamaño 33484360
+Reading OFF file ../../../data/33484360_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 38373 ms
+Labeled frontier edges in 10386.4 ms
+Labeled seed edges in 12715.5 ms
+Mesh with 10796391 polygons 44284937 edges and 662574 barrier-edge tips.
+Time to generate Triangulation: 231619 ms
+Time to label max edges 38373 ms
+Time to label frontier edges 10386.4 ms
+Time to label seed edges 12715.5 ms
+Time to label total61474.9 ms
+Time to traversal and repair 20523.8 ms
+Time to traversal 18681.2 ms
+Time to repair 1842.64 ms
+Time to generate polygonal mesh 81998.7 ms
+Printing JSON file as uniform_33484360.json
+output json in uniform_33484360.json
+Tiempo de ejecución: 470.661 segundos
+
+Mon 27 Mar 2023 09:42:09 PM -03
+Ejecutando Polylla con tamaño 34837875
+Reading OFF file ../../../data/34837875_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 38300.7 ms
+Labeled frontier edges in 10847.2 ms
+Labeled seed edges in 13342.3 ms
+Mesh with 11233242 polygons 46075559 edges and 690231 barrier-edge tips.
+Time to generate Triangulation: 241576 ms
+Time to label max edges 38300.7 ms
+Time to label frontier edges 10847.2 ms
+Time to label seed edges 13342.3 ms
+Time to label total62490.2 ms
+Time to traversal and repair 21188.5 ms
+Time to traversal 19124.4 ms
+Time to repair 2064.16 ms
+Time to generate polygonal mesh 83678.7 ms
+Printing JSON file as uniform_34837875.json
+output json in uniform_34837875.json
+Tiempo de ejecución: 488.492 segundos
+
+Mon 27 Mar 2023 09:50:17 PM -03
+Ejecutando Polylla con tamaño 36191390
+Reading OFF file ../../../data/36191390_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 40781.5 ms
+Labeled frontier edges in 12174.7 ms
+Labeled seed edges in 15306.3 ms
+Mesh with 11669630 polygons 47865614 edges and 716588 barrier-edge tips.
+Time to generate Triangulation: 254065 ms
+Time to label max edges 40781.5 ms
+Time to label frontier edges 12174.7 ms
+Time to label seed edges 15306.3 ms
+Time to label total68262.4 ms
+Time to traversal and repair 22534.6 ms
+Time to traversal 20264.4 ms
+Time to repair 2270.18 ms
+Time to generate polygonal mesh 90797 ms
+Printing JSON file as uniform_36191390.json
+output json in uniform_36191390.json
+Tiempo de ejecución: 516.444 segundos
+
+Mon 27 Mar 2023 09:58:54 PM -03
+Ejecutando Polylla con tamaño 37544905
+Reading OFF file ../../../data/37544905_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 42018 ms
+Labeled frontier edges in 13336.5 ms
+Labeled seed edges in 16730.1 ms
+Mesh with 12106593 polygons 49656371 edges and 743996 barrier-edge tips.
+Time to generate Triangulation: 281323 ms
+Time to label max edges 42018 ms
+Time to label frontier edges 13336.5 ms
+Time to label seed edges 16730.1 ms
+Time to label total72084.7 ms
+Time to traversal and repair 28805.7 ms
+Time to traversal 26400 ms
+Time to repair 2405.66 ms
+Time to generate polygonal mesh 100890 ms
+Printing JSON file as uniform_37544905.json
+output json in uniform_37544905.json
+Tiempo de ejecución: 560.811 segundos
+
+Mon 27 Mar 2023 10:08:15 PM -03
+Ejecutando Polylla con tamaño 38898420
+Reading OFF file ../../../data/38898420_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 45508.4 ms
+Labeled frontier edges in 14334.7 ms
+Labeled seed edges in 16297.8 ms
+Mesh with 12543617 polygons 51447023 edges and 770522 barrier-edge tips.
+Time to generate Triangulation: 366303 ms
+Time to label max edges 45508.4 ms
+Time to label frontier edges 14334.7 ms
+Time to label seed edges 16297.8 ms
+Time to label total76140.9 ms
+Time to traversal and repair 26073.4 ms
+Time to traversal 23819.9 ms
+Time to repair 2253.54 ms
+Time to generate polygonal mesh 102214 ms
+Printing JSON file as uniform_38898420.json
+output json in uniform_38898420.json
+Tiempo de ejecución: 660.800 segundos
+
+Mon 27 Mar 2023 10:19:15 PM -03
+Ejecutando Polylla con tamaño 40251935
+Reading OFF file ../../../data/40251935_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 43955.8 ms
+Labeled frontier edges in 12862.7 ms
+Labeled seed edges in 15204.2 ms
+Mesh with 12980615 polygons 53237649 edges and 796984 barrier-edge tips.
+Time to generate Triangulation: 284278 ms
+Time to label max edges 43955.8 ms
+Time to label frontier edges 12862.7 ms
+Time to label seed edges 15204.2 ms
+Time to label total72022.7 ms
+Time to traversal and repair 24079.8 ms
+Time to traversal 21690.8 ms
+Time to repair 2389.01 ms
+Time to generate polygonal mesh 96102.5 ms
+Printing JSON file as uniform_40251935.json
+output json in uniform_40251935.json
+Tiempo de ejecución: 565.284 segundos
+
+Mon 27 Mar 2023 10:28:41 PM -03
+Ejecutando Polylla con tamaño 41605450
+Reading OFF file ../../../data/41605450_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 45940.3 ms
+Labeled frontier edges in 12899.9 ms
+Labeled seed edges in 15620.2 ms
+Mesh with 13416313 polygons 55027074 edges and 823991 barrier-edge tips.
+Time to generate Triangulation: 296142 ms
+Time to label max edges 45940.3 ms
+Time to label frontier edges 12899.9 ms
+Time to label seed edges 15620.2 ms
+Time to label total74460.4 ms
+Time to traversal and repair 25109.1 ms
+Time to traversal 22647.3 ms
+Time to repair 2461.84 ms
+Time to generate polygonal mesh 99569.5 ms
+Printing JSON file as uniform_41605450.json
+output json in uniform_41605450.json
+Tiempo de ejecución: 589.873 segundos
+
+Mon 27 Mar 2023 10:38:31 PM -03
+Ejecutando Polylla con tamaño 42958965
+Reading OFF file ../../../data/42958965_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 46983.6 ms
+Labeled frontier edges in 14026.6 ms
+Labeled seed edges in 16531.9 ms
+Mesh with 13852419 polygons 56816789 edges and 850319 barrier-edge tips.
+Time to generate Triangulation: 312727 ms
+Time to label max edges 46983.6 ms
+Time to label frontier edges 14026.6 ms
+Time to label seed edges 16531.9 ms
+Time to label total77542.1 ms
+Time to traversal and repair 26436.2 ms
+Time to traversal 23729 ms
+Time to repair 2707.18 ms
+Time to generate polygonal mesh 103978 ms
+Printing JSON file as uniform_42958965.json
+output json in uniform_42958965.json
+Tiempo de ejecución: 620.701 segundos
+
+Mon 27 Mar 2023 10:48:51 PM -03
+Ejecutando Polylla con tamaño 44312480
+Reading OFF file ../../../data/44312480_points.1.off
+Constructing interior halfedges
+Constructing interior halfedges
+0. aca 
+1. aca 
+2. aca 
+3. aca 
+Constructing exterior halfedges
+Creating Polylla...
+Labered max edges in 48784.4 ms
+Labeled frontier edges in 14781.5 ms
+Labeled seed edges in 17175.7 ms
+Mesh with 14288595 polygons 58606744 edges and 876908 barrier-edge tips.
+Time to generate Triangulation: 316257 ms
+Time to label max edges 48784.4 ms
+Time to label frontier edges 14781.5 ms
+Time to label seed edges 17175.7 ms
+Time to label total80741.5 ms
+Time to traversal and repair 27520.5 ms
+Time to traversal 24722.3 ms
+Time to repair 2798.15 ms
+Time to generate polygonal mesh 108262 ms
+Printing JSON file as uniform_44312480.json
+output json in uniform_44312480.json
+Tiempo de ejecución: 633.633 segundos
+
+Mon 27 Mar 2023 10:59:25 PM -03

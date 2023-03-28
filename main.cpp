@@ -32,8 +32,10 @@ int main(int argc, char **argv) {
 
         Polylla mesh(node_file, ele_file, neigh_file);
         
-        mesh.print_OFF(output+".off");
-        std::cout<<"output off in "<<output<<".off"<<std::endl;
+        mesh.print_stats(output + ".json");
+        std::cout<<"output json in "<<output<<".json"<<std::endl;
+        //mesh.print_OFF(output+".off");
+        //std::cout<<"output off in "<<output<<".off"<<std::endl;
         //mesh.print_ALE(output+".ale");
         //std::cout<<"output ale in "<<output<<".ale"<<std::endl;
     }else if (argc == 3){
@@ -41,8 +43,10 @@ int main(int argc, char **argv) {
         std::string output = std::string(argv[2]);
 	    Polylla mesh(off_file);
 
-        mesh.print_OFF(output+".off");
-        std::cout<<"output off in "<<output<<".off"<<std::endl;
+        mesh.print_stats(output + ".json");
+        std::cout<<"output json in "<<output<<".json"<<std::endl;
+        //mesh.print_OFF(output+".off");
+        //std::cout<<"output off in "<<output<<".off"<<std::endl;
         //mesh.print_ALE(output+".ale");
         //std::cout<<"output ale in "<<output<<".ale"<<std::endl;
     }else if (argc == 2){

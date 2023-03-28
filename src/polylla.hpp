@@ -153,15 +153,15 @@ public:
         t_start = std::chrono::high_resolution_clock::now();
         for(auto &e : seed_edges){
             polygon_seed = travel_triangles(e);
-            output_seeds.push_back(polygon_seed);
-            //if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
-            //    output_seeds.push_back(polygon_seed);
-            //}else{ //Else, the polygon is send to reparation phase
-            //    auto t_start_repair = std::chrono::high_resolution_clock::now();
-            //    barrieredge_tip_reparation(polygon_seed);
-            //    auto t_end_repair = std::chrono::high_resolution_clock::now();
-            //    t_repair += std::chrono::duration<double, std::milli>(t_end_repair-t_start_repair).count();
-            //}         
+            //output_seeds.push_back(polygon_seed);
+            if(!has_BarrierEdgeTip(polygon_seed)){ //If the polygon is a simple polygon then is part of the mesh
+                output_seeds.push_back(polygon_seed);
+            }else{ //Else, the polygon is send to reparation phase
+                auto t_start_repair = std::chrono::high_resolution_clock::now();
+                barrieredge_tip_reparation(polygon_seed);
+                auto t_end_repair = std::chrono::high_resolution_clock::now();
+                t_repair += std::chrono::duration<double, std::milli>(t_end_repair-t_start_repair).count();
+            }         
         }    
         t_end = std::chrono::high_resolution_clock::now();
         t_traversal_and_repair = std::chrono::duration<double, std::milli>(t_end-t_start).count();
